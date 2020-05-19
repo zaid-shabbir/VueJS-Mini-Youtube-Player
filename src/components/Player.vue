@@ -94,7 +94,6 @@
           &nbsp; for $1.00
           <input type="checkbox" id="checkbox" checked />
         </div>
-        <div v-cloak></div>
       </div>
       <div class="playlist">
         <div class="next-video-title">Next Video</div>

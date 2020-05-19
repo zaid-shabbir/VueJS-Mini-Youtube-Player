@@ -11,8 +11,7 @@
                 height="190"
                 frameborder="0"
                 scrolling="no"
-                @click="ch"
-                src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0"
+                :src="srcUrl"
               >
               </iframe>
             </div>
@@ -71,12 +70,14 @@
           >
           <div class="add_block">
             <input
+              v-model="url"
               class="youtube_link_input"
               type="text"
               id="youtube_link"
               placeholder="https://..Paste Your Youtube URL Link here"
             />
             <svg
+            @click="addInPlaylist"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
@@ -314,7 +315,7 @@
 </template>
 
 <script>
-import $ from "jquery"
+import $ from "jquery";
 export default {
   name: "Player",
   data() {
@@ -325,6 +326,10 @@ export default {
       duration: null,
       currentTime: null,
       isTimerPlaying: false,
+      index: 0,
+      video_id: "DBXH9jJRaDk",
+      url: "",
+      playlist: [],
       tracks: [
         {
           name: "Mekanın Sahibi",
@@ -352,23 +357,39 @@ export default {
       transitionName: null
     };
   },
-  mounted(){
-    $.ajax({
-      url: "http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=ojCkgU5XGdg&format=json",
-      headers: {  'Access-Control-Allow-Origin': 'http://www.youtube.com' },
-      xhrFields: {
-      withCredentials: true,
-      dataType: 'jsonp',
-          success: function() { alert('hello!'); },
-          error: function() { alert('boo!'); },
-   }
-    })
-    // $.ajax('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=ojCkgU5XGdg&format=json',function(data){
-    // alert(data.data.title);})
+  computed: {
+    srcUrl() {
+      return `https://www.youtube.com/embed/${this.video_id}?controls=0`;
+    }
+  },
+  mounted() {
+    $.getJSON(
+      "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=u8nQa1cJyX8&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
+      function(data) {
+        console.log(data);
+      }
+    );
   },
   methods: {
-    ch(e) {
-      console.log(e);
+    getVideoId() {
+      var video_id = this.url.split("v=")[1];
+      var ampersandPosition = video_id.indexOf("&");
+      if (ampersandPosition != -1) {
+        video_id = video_id.substring(0, ampersandPosition);
+      }
+      return video_id
+    },
+    getVideoData() {
+      this.video_id = "abc";
+    },
+    addInPlaylist(){
+      let video_id = this.getVideoId()
+      let video = {}
+      video.number = this.index
+      video.id = video_id
+      this.playlist.push(video)
+      console.log(this.playlist);
+      
     },
     play() {
       if (this.audio.paused) {

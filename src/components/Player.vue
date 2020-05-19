@@ -136,7 +136,7 @@
             </svg>
           </div>
         </div>
-        <div v-if="playlist.length > 2">
+        <div  id="style-1" class="que-list-container" v-if="playlist.length > 2">
           <div class="que-title">QueList</div>
           <div v-for="(video, index) in playlist" :key="index">
             <div v-if="index > 1" class="video-detail">
@@ -412,8 +412,8 @@ export default {
             .format("hh:mm:ss");
           video.number = this.playlist.length + 1;
           if (this.playlist.length == 0) {
-            this.current_video.number = this.playlist[0].number;
-            this.current_video.video_id = 1;
+            this.current_video.number = 1;
+            this.current_video.video_id = video_id;
             this.current_video.title = data.items[0].snippet.title;
             this.current_video.duration = moment
               .duration(data.items[0].contentDetails.duration)

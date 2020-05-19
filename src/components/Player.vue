@@ -96,6 +96,9 @@
         </div>
         <div v-cloak></div>
       </div>
+      <div class="playlist-wrapper">
+        <hr class="see-playlist" />
+      </div>
     </div>
 
     <svg

@@ -327,7 +327,7 @@ export default {
       currentTime: null,
       isTimerPlaying: false,
       index: 0,
-      video_id: "DBXH9jJRaDk",
+      video_id: "",
       url: "",
       playlist: [],
       tracks: [

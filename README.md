@@ -1,5 +1,7 @@
 # youtube-player
 
+<img src="src/intro_card.png" width="1200">
+
 ## Project setup
 ```
 npm install

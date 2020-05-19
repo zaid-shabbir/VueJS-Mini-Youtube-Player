@@ -46,17 +46,45 @@
           </div>
         </div>
         <div class="progress" ref="progress">
+          <div class="album-info__name">{{ currentTrack.artist }}</div>
           <div class="progress__top">
-            <div class="album-info" v-if="currentTrack">
-              <div class="album-info__name">{{ currentTrack.artist }}</div>
-              <div class="album-info__track">{{ currentTrack.name }}</div>
-            </div>
+            <div class="album-info" v-if="currentTrack"></div>
             <div class="progress__duration">{{ duration }}</div>
           </div>
           <div class="progress__bar" @click="clickProgress">
             <div class="progress__current" :style="{ width: barWidth }"></div>
           </div>
           <div class="progress__time">{{ currentTime }}</div>
+        </div>
+        <div class="add_link">
+          <label class="youtube_link_label" for="youtube_link"
+            >FREE: Add A Youtube Video</label
+          >
+          <div class="add_block">
+            <input
+              class="youtube_link_input"
+              type="text"
+              id="youtube_link"
+              placeholder="https://..Paste Your Youtube URL Link here"
+            />
+            <svg
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="plus-circle"
+              class="svg-inline--fa fa-plus-circle fa-w-16"
+              role="img"
+              height="35"
+              width="35"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="currentColor"
+                d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"
+              ></path>
+            </svg>
+          </div>
         </div>
         <div v-cloak></div>
       </div>

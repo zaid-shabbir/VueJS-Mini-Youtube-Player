@@ -334,7 +334,6 @@ export default {
       video_id: "",
       url: "",
       playlist: [],
-      dur: "",
       tracks: [
         {
           name: "Mekanın Sahibi",
@@ -367,14 +366,14 @@ export default {
       return `https://www.youtube.com/embed/${this.video_id}?controls=0`;
     }
   },
-  mounted() {
-    $.getJSON(
-      "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
-      function(data) {
-        console.log(data.items[0]);
-      }
-    );
-  },
+  // mounted() {
+  //   $.getJSON(
+  //     "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
+  //     function(data) {
+  //       console.log(data.items[0]);
+  //     }
+  //   );
+  // },
   methods: {
     getVideoId(url) {
       var video_id = url.split("v=")[1];
@@ -384,31 +383,23 @@ export default {
       }
       return video_id;
     },
-    getVideoData(id) {
+    addInPlaylist() {
+      let video = {};
+      let video_id = this.getVideoId(this.url);
       $.getJSON(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${id}&key=${this.api_key}`,
-        function(data) {
-          return data.items[0];
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${video_id}&key=${this.api_key}`,
+        data => {
+          video.title = data.items[0].snippet.title;
+          video.duration = moment
+            .duration(data.items[0].contentDetails.duration)
+            .format("hh:mm:ss");
+          video.number = this.playlist.length+1;
+          this.playlist.push(video);
+          console.log(this.playlist);
         }
       );
     },
-    addInPlaylist ()  {
-      let video_id = this.getVideoId(this.url);
-      let video_data = this.getVideoData(video_id)
-      let video = {};
-      video.number = this.index;
-      video.id = video_id;
-      video.title = video_data.snippet
-      this.playlist.push(video);
-      console.log(this.playlist);
-    },
     play() {
-        console.log(this.dur);
-
-      console.log(
-        
-      moment.duration(this.dur).format("hh:mm:ss"))
-      // console.log(this.parseDuration(this.a))
       if (this.audio.paused) {
         this.audio.play();
         this.isTimerPlaying = true;

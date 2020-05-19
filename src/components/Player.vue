@@ -136,33 +136,36 @@
             </svg>
           </div>
         </div>
-        <div v-if="playlist.length > 2" class="que-title">QueList</div>
-        <div class="video-detail">
-          <div class="video-title">Title of the video</div>
-          <div class="video-duration-container">
-            <div class="video-duration">
-              Duration
+        <div v-if="playlist.length > 2">
+          <div class="que-title">QueList</div>
+          <div class="video-detail">
+            <div class="video-title">Title of the video</div>
+            <div class="video-duration-container">
+              <div class="video-duration">
+                Duration
+              </div>
+              <svg
+                height="20"
+                width="10"
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fal"
+                data-icon="ellipsis-v"
+                class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 64 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
+                ></path>
+              </svg>
             </div>
-            <svg
-              height="20"
-              width="10"
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fal"
-              data-icon="ellipsis-v"
-              class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 64 512"
-            >
-              <path
-                fill="currentColor"
-                d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
-              ></path>
-            </svg>
           </div>
+          <hr class="playlist-hr" />
         </div>
-        <hr class="playlist-hr" />
+
         <div class="vip-section">
           <div>
             <div class="vip-top">

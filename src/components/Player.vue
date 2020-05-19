@@ -411,8 +411,19 @@ export default {
             .duration(data.items[0].contentDetails.duration)
             .format("hh:mm:ss");
           video.number = this.playlist.length + 1;
-          this.playlist.push(video);
+          if (this.playlist.length == 0) {
+            this.current_video.number = this.playlist[0].number;
+            this.current_video.video_id = 1;
+            this.current_video.title = data.items[0].snippet.title;
+            this.current_video.duration = moment
+              .duration(data.items[0].contentDetails.duration)
+              .format("hh:mm:ss");
+            this.playlist.push(video);
+          } else {
+            this.playlist.push(video);
+          }
           console.log(this.playlist);
+          console.log(this.current_video);
         }
       );
     },
@@ -533,16 +544,6 @@ export default {
       vm.nextTrack();
       this.isTimerPlaying = true;
     };
-
-    // this is optional (for preload covers)
-    for (let index = 0; index < this.tracks.length; index++) {
-      const element = this.tracks[index];
-      let link = document.createElement("link");
-      link.rel = "prefetch";
-      link.href = element.cover;
-      link.as = "image";
-      document.head.appendChild(link);
-    }
   }
 };
 </script>

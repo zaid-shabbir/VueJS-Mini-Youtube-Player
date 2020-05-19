@@ -391,6 +391,30 @@ border: 0.5px solid #FFFFFF1A;
 }
 .vip-que{
   color: #EF67CD;
-  size: 14px;
+  font-size: 14px;
   font-weight: bold;
+}
+.notification-container{
+  width: 350px;
+  height: 70px;
+  padding: 15px 15px;
+  background-color: #EF67CD;
+  display: flex;
+  justify-content: space-between;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.list-svg{
+  color: #FFFFFF;
+}
+.note{
+  margin-top: 8px;
+  font-family: poppins;
+  font-size: 17px;
+  color: #FFFFFF;
+  
+}
+.times-svg{
+  color: #FFFFFF;
+  cursor: pointer;
 }

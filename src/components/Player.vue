@@ -95,7 +95,7 @@
           <input type="checkbox" id="checkbox" checked />
         </div>
       </div>
-      <div class="playlist">
+      <div v-show="false" class="playlist">
         <div class="next-video-title">Next Video</div>
         <div class="video-detail">
           <div class="video-title">Title of the video</div>
@@ -161,7 +161,43 @@
           <button class="priority-btn">Add Priority</button>
         </div>
       </div>
-
+      <div v-show="false" class="notification-container">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fal"
+          data-icon="list-alt"
+          height="40"
+          width="40"
+          class="list-svg svg-inline--fa fa-list-alt fa-w-16"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        >
+          <path
+            fill="currentColor"
+            d="M464 64c8.823 0 16 7.178 16 16v352c0 8.822-7.177 16-16 16H48c-8.823 0-16-7.178-16-16V80c0-8.822 7.177-16 16-16h416m0-32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zm-336 96c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32zm0 96c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32zm0 96c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32zm288-148v-24a6 6 0 0 0-6-6H198a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h212a6 6 0 0 0 6-6zm0 96v-24a6 6 0 0 0-6-6H198a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h212a6 6 0 0 0 6-6zm0 96v-24a6 6 0 0 0-6-6H198a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h212a6 6 0 0 0 6-6z"
+          ></path>
+        </svg>
+        <div class="note">You are 31st in line</div>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fal"
+          data-icon="times"
+          height="40"
+          width="40"
+          class="times-svg svg-inline--fa fa-times fa-w-10"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 320 512"
+        >
+          <path
+            fill="currentColor"
+            d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"
+          ></path>
+        </svg>
+      </div>
       <div class="playlist-toggler">
         <hr class="see-playlist" />
       </div>

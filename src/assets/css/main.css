@@ -298,7 +298,7 @@ margin-top: 20px;
   outline: 2px solid #1F2251;
   appearance: none;
 }
-.playlist-wrapper{
+.playlist-toggler{
   text-align: center;
   width: 200px;
   height: 15px;
@@ -311,4 +311,86 @@ margin-top: 20px;
   width: 120px;
   border: 2px solid #FFFFFF33;
   margin-top: 4px;
+}
+.playlist{
+  padding: 10px 25px;
+  width: 370px;
+  max-height: 250px;
+  background-color: #121436;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.next-video-title{
+  font-family: poppins;
+  font-size: 16px;
+  color: #EF67CD;
+  margin-bottom: 10px;
+}
+.video-detail{
+display: flex;
+justify-content: space-between;
+margin-bottom: 10px;
+}
+.video-title{
+  color: #71829e;
+  width: 250px;
+  font-family: poppins;
+  font-size: 14px;
+}
+.video-duration-container{
+  display: inline-flex;
+}
+.ellipses{
+  color: wheat;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.video-duration{
+  color: #71829e;
+  font-family: poppins;
+  font-size: 14px;
+}
+.que-title{
+  margin: 10px 0px;
+  font-family: poppins;
+  font-size: 16px;
+  color: #BABABA;
+}
+.playlist-hr{
+border: 0.5px solid #FFFFFF1A;
+}
+.vip-section{
+  display: flex;
+  justify-content: space-between;
+  padding: 15px 0px;
+}
+.vip-top{
+  font-family: poppins;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+}
+.vip-bottom{
+  font-family: poppins;
+  font-size: 12px;
+  color: #FFFFFF;
+}
+.priority-btn{
+  margin-left: 10px;
+  color: #FFFFFF;
+  font-family: poppins;
+  font-size: 14px;
+  font-weight: bold;
+  width: 144px;
+  height: 35px;
+  background: transparent linear-gradient(0deg, #BA54F5 0%, #E14ECA 100%) 0% 0% no-repeat padding-box;
+  border: none;
+  text-shadow: 0px 3px 6px #00000029;
+  border-radius: 5px;
+}
+.vip-que{
+  color: #EF67CD;
+  size: 14px;
+  font-weight: bold;
 }

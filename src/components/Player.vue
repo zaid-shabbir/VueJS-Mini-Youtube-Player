@@ -96,7 +96,74 @@
         </div>
         <div v-cloak></div>
       </div>
-      <div class="playlist-wrapper">
+      <div class="playlist">
+        <div class="next-video-title">Next Video</div>
+        <div class="video-detail">
+          <div class="video-title">Title of the video</div>
+          <div class="video-duration-container">
+            <div class="video-duration">
+              Duration
+            </div>
+            <svg
+              height="20"
+              width="10"
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fal"
+              data-icon="ellipsis-v"
+              class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 512"
+            >
+              <path
+                fill="currentColor"
+                d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <div class="que-title">QueList</div>
+        <div class="video-detail">
+          <div class="video-title">Title of the video</div>
+          <div class="video-duration-container">
+            <div class="video-duration">
+              Duration
+            </div>
+            <svg
+              height="20"
+              width="10"
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fal"
+              data-icon="ellipsis-v"
+              class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 512"
+            >
+              <path
+                fill="currentColor"
+                d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <hr class="playlist-hr" />
+        <div class="vip-section">
+          <div>
+            <div class="vip-top">
+              Get in the <span class="vip-que">VIP QueList</span>
+            </div>
+            <div class="vip-bottom">
+              Jump the line for only $1.00
+            </div>
+          </div>
+          <button class="priority-btn">Add Priority</button>
+        </div>
+      </div>
+
+      <div class="playlist-toggler">
         <hr class="see-playlist" />
       </div>
     </div>

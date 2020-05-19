@@ -136,7 +136,7 @@
             </svg>
           </div>
         </div>
-        <div  id="style-1" class="que-list-container" v-if="playlist.length > 2">
+        <div id="style-1" class="que-list-container" v-if="playlist.length > 2">
           <div class="que-title">QueList</div>
           <div v-for="(video, index) in playlist" :key="index">
             <div v-if="index > 1" class="video-detail">

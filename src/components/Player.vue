@@ -5,7 +5,9 @@
         <div class="player__top">
           <div class="player-cover">
             <div class="video">
-              Video goes here
+              <iframe 
+src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0">
+</iframe>
             </div>
             <!-- <transition-group :name="transitionName">
               <div

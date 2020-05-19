@@ -87,12 +87,11 @@
           </div>
         </div>
         <div class="vip">
-          Add my vidoe to the 
+          Add my vidoe to the
           <span class="vip-list">
-            VIP Quelist 
+            VIP Quelist
           </span>
-          &nbsp;
-           for $1.00
+          &nbsp; for $1.00
           <input type="checkbox" id="checkbox" checked />
         </div>
         <div v-cloak></div>

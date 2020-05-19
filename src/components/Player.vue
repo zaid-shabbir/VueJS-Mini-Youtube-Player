@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="wrapper" id="app">
+    <div class="wrapper">
       <div class="player">
         <div class="player__top">
           <div class="player-cover">

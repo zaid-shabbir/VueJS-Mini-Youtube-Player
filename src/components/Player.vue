@@ -5,10 +5,16 @@
         <div class="player__top">
           <div class="player-cover">
             <div class="video">
-              <iframe class="iframe" width="340" height="190"
-              frameborder="0" scrolling="no" @click="ch"
-src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0">
-</iframe>
+              <iframe
+                class="iframe"
+                width="340"
+                height="190"
+                frameborder="0"
+                scrolling="no"
+                @click="ch"
+                src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0"
+              >
+              </iframe>
             </div>
             <!-- <transition-group :name="transitionName">
               <div
@@ -308,6 +314,7 @@ src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0">
 </template>
 
 <script>
+import $ from "jquery"
 export default {
   name: "Player",
   data() {
@@ -338,76 +345,6 @@ export default {
             "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/2.mp3",
           url: "https://www.youtube.com/watch?v=Lin-a2lTelg",
           favorited: true
-        },
-        {
-          name: "Extreme Ways",
-          artist: "Moby",
-          cover:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/3.jpg",
-          source:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/3.mp3",
-          url: "https://www.youtube.com/watch?v=ICjyAe9S54c",
-          favorited: false
-        },
-        {
-          name: "Butterflies",
-          artist: "Sia",
-          cover:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/4.jpg",
-          source:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/4.mp3",
-          url: "https://www.youtube.com/watch?v=kYgGwWYOd9Y",
-          favorited: false
-        },
-        {
-          name: "The Final Victory",
-          artist: "Haggard",
-          cover:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/5.jpg",
-          source:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/5.mp3",
-          url: "https://www.youtube.com/watch?v=0WlpALnQdN8",
-          favorited: true
-        },
-        {
-          name: "Genius ft. Sia, Diplo, Labrinth",
-          artist: "LSD",
-          cover:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/6.jpg",
-          source:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/6.mp3",
-          url: "https://www.youtube.com/watch?v=HhoATZ1Imtw",
-          favorited: false
-        },
-        {
-          name: "The Comeback Kid",
-          artist: "Lindi Ortega",
-          cover:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/7.jpg",
-          source:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/7.mp3",
-          url: "https://www.youtube.com/watch?v=me6aoX0wCV8",
-          favorited: true
-        },
-        {
-          name: "Overdose",
-          artist: "Grandson",
-          cover:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/8.jpg",
-          source:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/8.mp3",
-          url: "https://www.youtube.com/watch?v=00-Rl3Jlx-o",
-          favorited: false
-        },
-        {
-          name: "Rag'n'Bone Man",
-          artist: "Human",
-          cover:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/9.jpg",
-          source:
-            "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/9.mp3",
-          url: "https://www.youtube.com/watch?v=L3wKzyIN1yk",
-          favorited: false
         }
       ],
       currentTrack: null,
@@ -415,10 +352,23 @@ export default {
       transitionName: null
     };
   },
+  mounted(){
+    $.ajax({
+      url: "http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=ojCkgU5XGdg&format=json",
+      headers: {  'Access-Control-Allow-Origin': 'http://www.youtube.com' },
+      xhrFields: {
+      withCredentials: true,
+      dataType: 'jsonp',
+          success: function() { alert('hello!'); },
+          error: function() { alert('boo!'); },
+   }
+    })
+    // $.ajax('http://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=ojCkgU5XGdg&format=json',function(data){
+    // alert(data.data.title);})
+  },
   methods: {
-    ch(e){
+    ch(e) {
       console.log(e);
-      
     },
     play() {
       if (this.audio.paused) {

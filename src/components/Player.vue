@@ -166,7 +166,7 @@
                 </svg>
               </div>
             </div>
-            <hr class="playlist-hr" />
+            <hr v-if="index > 1" class="playlist-hr" />
           </div>
         </div>
 

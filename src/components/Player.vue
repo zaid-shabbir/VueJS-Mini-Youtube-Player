@@ -54,10 +54,10 @@
           </div>
         </div>
         <div class="progress" ref="progress">
-          <div class="album-info__name">{{ currentTrack.artist }}</div>
+          <div class="album-info__name">{{ current_video.title }}</div>
           <div class="progress__top">
             <div class="album-info" v-if="currentTrack"></div>
-            <div class="progress__duration">{{ duration }}</div>
+            <div class="progress__duration">{{ current_video.duration }}</div>
           </div>
           <div class="progress__bar" @click="clickProgress">
             <div class="progress__current" :style="{ width: barWidth }"></div>
@@ -105,13 +105,17 @@
           <input type="checkbox" id="checkbox" checked />
         </div>
       </div>
-      <div v-show="false" class="playlist">
+      <div v-show="true" class="playlist">
         <div class="next-video-title">Next Video</div>
         <div class="video-detail">
-          <div class="video-title">Title of the video</div>
-          <div class="video-duration-container">
+          <div v-if="playlist.length > 1" class="video-title">
+            {{ playlist[current_video.number].number }}.&nbsp;{{
+              playlist[current_video.number].title
+            }}
+          </div>
+          <div v-if="playlist.length > 1" class="video-duration-container">
             <div class="video-duration">
-              Duration
+              {{ playlist[current_video.number].duration }}
             </div>
             <svg
               height="20"
@@ -132,7 +136,7 @@
             </svg>
           </div>
         </div>
-        <div class="que-title">QueList</div>
+        <div v-if="playlist.length > 2" class="que-title">QueList</div>
         <div class="video-detail">
           <div class="video-title">Title of the video</div>
           <div class="video-duration-container">
@@ -189,7 +193,7 @@
             d="M464 64c8.823 0 16 7.178 16 16v352c0 8.822-7.177 16-16 16H48c-8.823 0-16-7.178-16-16V80c0-8.822 7.177-16 16-16h416m0-32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zm-336 96c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32zm0 96c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32zm0 96c-17.673 0-32 14.327-32 32s14.327 32 32 32 32-14.327 32-32-14.327-32-32-32zm288-148v-24a6 6 0 0 0-6-6H198a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h212a6 6 0 0 0 6-6zm0 96v-24a6 6 0 0 0-6-6H198a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h212a6 6 0 0 0 6-6zm0 96v-24a6 6 0 0 0-6-6H198a6 6 0 0 0-6 6v24a6 6 0 0 0 6 6h212a6 6 0 0 0 6-6z"
           ></path>
         </svg>
-        <div class="note">You are 31st in line</div>
+        <div class="note">{{ note }}</div>
         <svg
           aria-hidden="true"
           focusable="false"
@@ -330,10 +334,15 @@ export default {
       duration: null,
       currentTime: null,
       isTimerPlaying: false,
-      index: 0,
-      video_id: "",
+      current_video: {
+        number: 0,
+        video_id: "",
+        title: "Title",
+        duration: "00:00"
+      },
       url: "",
       playlist: [],
+      note: "",
       tracks: [
         {
           name: "Mekanın Sahibi",
@@ -363,7 +372,7 @@ export default {
   },
   computed: {
     srcUrl() {
-      return `https://www.youtube.com/embed/${this.video_id}?controls=0`;
+      return `https://www.youtube.com/embed/${this.current_video.video_id}?controls=0`;
     }
   },
   // mounted() {
@@ -389,17 +398,26 @@ export default {
       $.getJSON(
         `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${video_id}&key=${this.api_key}`,
         data => {
+          video.video_id = video_id;
           video.title = data.items[0].snippet.title;
           video.duration = moment
             .duration(data.items[0].contentDetails.duration)
             .format("hh:mm:ss");
-          video.number = this.playlist.length+1;
+          video.number = this.playlist.length + 1;
           this.playlist.push(video);
           console.log(this.playlist);
         }
       );
     },
     play() {
+      if (this.playlist.length == 0) {
+        this.note = "Add Videos to play.";
+      } else if (this.playlist.length == 1) {
+        this.current_video.number = this.playlist[0].number;
+        this.current_video.video_id = this.playlist[0].video_id;
+        this.current_video.title = this.playlist[0].title;
+        this.current_video.duration = this.playlist[0].duration;
+      }
       if (this.audio.paused) {
         this.audio.play();
         this.isTimerPlaying = true;

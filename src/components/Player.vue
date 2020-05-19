@@ -5,7 +5,8 @@
         <div class="player__top">
           <div class="player-cover">
             <div class="video">
-              <iframe 
+              <iframe class="iframe" width="340" height="190"
+              frameborder="0" scrolling="no" @click="ch"
 src="https://www.youtube.com/embed/tgbNymZ7vqY?controls=0">
 </iframe>
             </div>
@@ -415,6 +416,10 @@ export default {
     };
   },
   methods: {
+    ch(e){
+      console.log(e);
+      
+    },
     play() {
       if (this.audio.paused) {
         this.audio.play();

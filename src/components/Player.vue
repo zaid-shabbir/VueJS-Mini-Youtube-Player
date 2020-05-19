@@ -316,6 +316,9 @@
 
 <script>
 import $ from "jquery";
+var moment = require("moment");
+var momentDurationFormatSetup = require("moment-duration-format");
+momentDurationFormatSetup(moment);
 export default {
   name: "Player",
   data() {
@@ -331,7 +334,7 @@ export default {
       video_id: "",
       url: "",
       playlist: [],
-      a: "",
+      dur: "",
       tracks: [
         {
           name: "Mekanın Sahibi",
@@ -366,67 +369,46 @@ export default {
   },
   mounted() {
     $.getJSON(
-      "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=Iqi_hPEtfsc&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
+      "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
       function(data) {
-        this.a = data.items[0].contentDetails.duration;
-        // var b = convert_time(a);
-        console.log(this.a);
+        console.log(data.items[0]);
       }
     );
   },
   methods: {
-    getVideoId() {
-      var video_id = this.url.split("v=")[1];
+    getVideoId(url) {
+      var video_id = url.split("v=")[1];
       var ampersandPosition = video_id.indexOf("&");
       if (ampersandPosition != -1) {
         video_id = video_id.substring(0, ampersandPosition);
       }
       return video_id;
     },
-    getVideoData() {
+    getVideoData(id) {
       $.getJSON(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${this.video_id}&key=${this.api_key}`,
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${id}&key=${this.api_key}`,
         function(data) {
-          console.log(data.items[0].snippet.title);
+          return data.items[0];
         }
       );
     },
-    addInPlaylist() {
-      let video_id = this.getVideoId();
+    addInPlaylist ()  {
+      let video_id = this.getVideoId(this.url);
+      let video_data = this.getVideoData(video_id)
       let video = {};
       video.number = this.index;
       video.id = video_id;
+      video.title = video_data.snippet
       this.playlist.push(video);
       console.log(this.playlist);
     },
-    parseDuration(duration) {
-    var matches = duration.match(/[0-9]+[HMS]/g);
-
-    var seconds = 0;
-
-    matches.forEach(function (part) {
-        var unit = part.charAt(part.length-1);
-        var amount = parseInt(part.slice(0,-1));
-
-        switch (unit) {
-            case 'H':
-                seconds += amount*60*60;
-                break;
-            case 'M':
-                seconds += amount*60;
-                break;
-            case 'S':
-                seconds += amount;
-                break;
-            default:
-                // noop
-        }
-    });
-
-    return seconds;
-},
     play() {
-      console.log(this.parseDuration(this.a))
+        console.log(this.dur);
+
+      console.log(
+        
+      moment.duration(this.dur).format("hh:mm:ss"))
+      // console.log(this.parseDuration(this.a))
       if (this.audio.paused) {
         this.audio.play();
         this.isTimerPlaying = true;

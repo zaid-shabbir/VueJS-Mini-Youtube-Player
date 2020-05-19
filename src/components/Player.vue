@@ -77,7 +77,7 @@
               placeholder="https://..Paste Your Youtube URL Link here"
             />
             <svg
-            @click="addInPlaylist"
+              @click="addInPlaylist"
               aria-hidden="true"
               focusable="false"
               data-prefix="fas"
@@ -320,6 +320,7 @@ export default {
   name: "Player",
   data() {
     return {
+      api_key: "AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
       audio: null,
       circleLeft: null,
       barWidth: null,
@@ -330,6 +331,7 @@ export default {
       video_id: "",
       url: "",
       playlist: [],
+      a: "",
       tracks: [
         {
           name: "Mekanın Sahibi",
@@ -364,9 +366,11 @@ export default {
   },
   mounted() {
     $.getJSON(
-      "https://www.googleapis.com/youtube/v3/videos?part=snippet&id=u8nQa1cJyX8&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
+      "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=Iqi_hPEtfsc&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
       function(data) {
-        console.log(data);
+        this.a = data.items[0].contentDetails.duration;
+        // var b = convert_time(a);
+        console.log(this.a);
       }
     );
   },
@@ -377,21 +381,52 @@ export default {
       if (ampersandPosition != -1) {
         video_id = video_id.substring(0, ampersandPosition);
       }
-      return video_id
+      return video_id;
     },
     getVideoData() {
-      this.video_id = "abc";
+      $.getJSON(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${this.video_id}&key=${this.api_key}`,
+        function(data) {
+          console.log(data.items[0].snippet.title);
+        }
+      );
     },
-    addInPlaylist(){
-      let video_id = this.getVideoId()
-      let video = {}
-      video.number = this.index
-      video.id = video_id
-      this.playlist.push(video)
+    addInPlaylist() {
+      let video_id = this.getVideoId();
+      let video = {};
+      video.number = this.index;
+      video.id = video_id;
+      this.playlist.push(video);
       console.log(this.playlist);
-      
     },
+    parseDuration(duration) {
+    var matches = duration.match(/[0-9]+[HMS]/g);
+
+    var seconds = 0;
+
+    matches.forEach(function (part) {
+        var unit = part.charAt(part.length-1);
+        var amount = parseInt(part.slice(0,-1));
+
+        switch (unit) {
+            case 'H':
+                seconds += amount*60*60;
+                break;
+            case 'M':
+                seconds += amount*60;
+                break;
+            case 'S':
+                seconds += amount;
+                break;
+            default:
+                // noop
+        }
+    });
+
+    return seconds;
+},
     play() {
+      console.log(this.parseDuration(this.a))
       if (this.audio.paused) {
         this.audio.play();
         this.isTimerPlaying = true;

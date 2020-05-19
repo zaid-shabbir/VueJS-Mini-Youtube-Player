@@ -72,7 +72,7 @@
               focusable="false"
               data-prefix="fas"
               data-icon="plus-circle"
-              class="svg-inline--fa fa-plus-circle fa-w-16"
+              class="svg-inline--fa fa-plus-circle fa-w-16 add_svg"
               role="img"
               height="35"
               width="35"
@@ -85,6 +85,15 @@
               ></path>
             </svg>
           </div>
+        </div>
+        <div class="vip">
+          Add my vidoe to the 
+          <span class="vip-list">
+            VIP Quelist 
+          </span>
+          &nbsp;
+           for $1.00
+          <input type="checkbox" id="checkbox" checked />
         </div>
         <div v-cloak></div>
       </div>

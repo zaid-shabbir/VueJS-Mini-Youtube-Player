@@ -171,7 +171,7 @@
           <button class="priority-btn">Add Priority</button>
         </div>
       </div>
-      <div v-show="false" class="notification-container">
+      <div v-if="note" class="notification-container">
         <svg
           aria-hidden="true"
           focusable="false"
@@ -191,6 +191,7 @@
         </svg>
         <div class="note">{{ note }}</div>
         <svg
+          @click="removeNote"
           aria-hidden="true"
           focusable="false"
           data-prefix="fal"
@@ -321,15 +322,15 @@ var momentDurationFormatSetup = require("moment-duration-format");
 momentDurationFormatSetup(moment);
 // var YouTubeIframeLoader = require("youtube-iframe");
 const YTPlayer = require("yt-player");
-// const player = new YTPlayer("#video");
 const player = new YTPlayer("#video", {
-        width: 360,
-        height: 200,
-        controls: false,
-        annotations: false,
-        related: false,
-        info: false
-      });
+  width: 360,
+  height: 200,
+  controls: false,
+  annotations: false,
+  related: false,
+  info: false,
+  autoplay: false
+});
 export default {
   name: "Player",
   data() {
@@ -344,7 +345,7 @@ export default {
       playing: false,
       current_video: {
         number: 0,
-        video_id: "MPFKsSFnu40",
+        video_id: "",
         title: "Title",
         duration: "00:00"
       },
@@ -384,6 +385,7 @@ export default {
     }
   },
   mounted() {
+    // this.loadVideo()
     //     // $.getJSON(
     //   "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
     //   function(data) {
@@ -420,23 +422,33 @@ export default {
               .duration(data.items[0].contentDetails.duration)
               .format("hh:mm:ss");
             this.playlist.push(video);
+            this.loadVideo();
+            this.playing = true;
           } else {
             this.playlist.push(video);
+            this.note = `You are ${video.number} in the list`;
           }
           console.log(this.playlist);
           console.log(this.current_video);
         }
       );
     },
-    loadVideo(){
-      player.load(this.current_video.video_id, true);
+    loadVideo() {
+      player.load(this.current_video.video_id);
       player.setVolume(100);
     },
     play() {
-      this.loadVideo()
-      this.playing = true;
-      player.play();
-        this.isTimerPlaying = true;
+      if (this.playlist.length == 0) {
+        this.note = "Playlist is empty";
+      } else {
+        if (this.isTimerPlaying == false) {
+          player.play();
+          this.isTimerPlaying = true;
+        } else {
+          player.pause();
+          this.isTimerPlaying = false;
+        }
+      }
       // if (this.audio.paused) {
       //   this.audio.play();
       //   this.isTimerPlaying = true;
@@ -444,6 +456,9 @@ export default {
       //   this.audio.pause();
       //   this.isTimerPlaying = false;
       // }
+    },
+    removeNote() {
+      this.note = "";
     },
     generateTime() {
       let width = (100 / this.audio.duration) * this.audio.currentTime;

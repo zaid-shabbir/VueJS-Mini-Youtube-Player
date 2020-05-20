@@ -11,7 +11,7 @@
                 class="default-image"
                 alt="Default Image"
               />
-              <div id="video"></div>
+              <div id="youtube-player"></div>
             </div>
           </div>
           <div class="player-controls">
@@ -94,7 +94,7 @@
           <input type="checkbox" id="checkbox" checked />
         </div>
       </div>
-      <div v-if="show_playlist" class="playlist">
+      <div v-if="show_playlist && !note" class="playlist">
         <div class="next-video-title">Next Video</div>
         <div class="video-detail">
           <div v-if="playlist.length > 1" class="video-title">
@@ -322,15 +322,8 @@ var momentDurationFormatSetup = require("moment-duration-format");
 momentDurationFormatSetup(moment);
 // var YouTubeIframeLoader = require("youtube-iframe");
 const YTPlayer = require("yt-player");
-const player = new YTPlayer("#video", {
-  width: 360,
-  height: 200,
-  controls: false,
-  annotations: false,
-  related: false,
-  info: false,
-  autoplay: false
-});
+var player;
+
 export default {
   name: "Player",
   data() {
@@ -380,14 +373,21 @@ export default {
       transitionName: null
     };
   },
+  // computed: {
+  //   srcUrl() {
+  //     return `https://www.youtube.com/embed/${this.current_video.video_id}?controls=0?enablejsapi=1`;
+  //   }
+  // },
   mounted() {
-    // this.loadVideo()
-    //     // $.getJSON(
-    //   "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
-    //   function(data) {
-    //     console.log(data.items[0]);
-    //   }
-    // );
+    player = new YTPlayer("#youtube-player", {
+      width: 360,
+      height: 200,
+      controls: false,
+      annotations: false,
+      related: false,
+      info: false,
+      autoplay: false
+    });
   },
   methods: {
     getVideoId(url) {
@@ -399,35 +399,39 @@ export default {
       return video_id;
     },
     addInPlaylist() {
-      let video = {};
-      let video_id = this.getVideoId(this.url);
-      $.getJSON(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${video_id}&key=${this.api_key}`,
-        data => {
-          video.video_id = video_id;
-          video.title = data.items[0].snippet.title;
-          video.duration = moment
-            .duration(data.items[0].contentDetails.duration)
-            .format("hh:mm:ss");
-          video.number = this.playlist.length + 1;
-          if (this.playlist.length == 0) {
-            this.current_video.number = 1;
-            this.current_video.video_id = video_id;
-            this.current_video.title = data.items[0].snippet.title;
-            this.current_video.duration = moment
+      if (this.url !== "") {
+        let video = {};
+        let video_id = this.getVideoId(this.url);
+        $.getJSON(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${video_id}&key=${this.api_key}`,
+          data => {
+            video.video_id = video_id;
+            video.title = data.items[0].snippet.title;
+            video.duration = moment
               .duration(data.items[0].contentDetails.duration)
               .format("hh:mm:ss");
-            this.playlist.push(video);
-            this.loadVideo();
-            this.playing = true;
-          } else {
-            this.playlist.push(video);
-            this.note = `You are ${video.number} in the list`;
+            video.number = this.playlist.length + 1;
+            if (this.playlist.length == 0) {
+              this.current_video.number = 1;
+              this.current_video.video_id = video_id;
+              this.current_video.title = data.items[0].snippet.title;
+              this.current_video.duration = moment
+                .duration(data.items[0].contentDetails.duration)
+                .format("hh:mm:ss");
+              this.playlist.push(video);
+              this.loadVideo();
+              this.playing = true;
+            } else {
+              this.playlist.push(video);
+              this.note = `You are ${video.number} in the list`;
+            }
+            console.log(this.playlist);
+            console.log(this.current_video);
           }
-          console.log(this.playlist);
-          console.log(this.current_video);
-        }
-      );
+        );
+      } else {
+        this.note = "Please enter a valid link";
+      }
     },
     loadVideo() {
       player.load(this.current_video.video_id);

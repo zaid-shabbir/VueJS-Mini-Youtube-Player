@@ -342,7 +342,8 @@ momentDurationFormatSetup(moment);
 // var YouTubeIframeLoader = require("youtube-iframe");
 const YTPlayer = require("yt-player");
 var player;
-
+var videotime = 0;
+var timeupdater = null;
 export default {
   name: "Player",
   data() {
@@ -364,7 +365,7 @@ export default {
         duration: "00:00",
         favorite: false
       },
-      url: "",
+      url: "https://www.youtube.com/watch?v=Il7Nv270zNk",
       playlist: [],
       note: "",
       tracks: [
@@ -407,9 +408,12 @@ export default {
       annotations: false,
       related: false,
       info: false,
-      modestBranding: false
+      modestBranding: false,
+      events: {
+      'onReady': this.onPlayerReady()
+    }
     });
-    this.generateTime()
+    // this.generateTime()
   },
   methods: {
     getVideoId(url) {
@@ -444,7 +448,7 @@ export default {
                 .format("hh:mm:ss");
               this.playlist.push(video);
               this.loadVideo();
-              this.playing = true;
+              this.playing = true              
             } else {
               this.playlist.push(video);
               this.note = `You are ${video.number} in the list`;
@@ -494,15 +498,23 @@ export default {
     togglePlaylist() {
       this.show_playlist = !this.show_playlist;
     },
-    generateTime() {
-      console.log(this.audio);
-      let width = (100 / this.current_video.duration) * this.time;
+    generateTime(time) {
+      var time_in_seconds = this.current_video.duration.split(':').reverse().reduce((prev, curr, i) => prev + curr*Math.pow(60, i), 0)
+      // console.log(this.audio.duration,'audio dur')
+      // console.log(this.current_video.duration,'video dur')
+      // console.log(this.audio.currentTime,'audio curr')
+      // console.log(time,'video curr')
+
+      // let width = (100 / this.audio.duration) * this.audio.currentTime;
+      let width = (100 / time_in_seconds) * time;
+      // console.log(t,"width");
+      
       this.barWidth = width + "%";
       this.circleLeft = width + "%";
       let durmin = Math.floor(this.current_video.duration / 60);
       let dursec = Math.floor(this.current_video.duration - durmin * 60);
-      let curmin = Math.floor(this.time / 60);
-      let cursec = Math.floor(this.time - curmin * 60);
+      let curmin = Math.floor(time / 60);
+      let cursec = Math.floor(time - curmin * 60);
       if (durmin < 10) {
         durmin = "0" + durmin;
       }
@@ -517,7 +529,7 @@ export default {
       }
       this.duration = durmin + ":" + dursec;
       this.currentTime = curmin + ":" + cursec;
-      console.log(this.currentTime);
+      // console.log(this.currentTime);
       
     },
     updateBar(x) {
@@ -533,15 +545,16 @@ export default {
       }
       this.barWidth = percentage + "%";
       this.circleLeft = percentage + "%";
-      this.time = (maxduration * percentage) / 100;
+       let curr = (maxduration * percentage) / 100;
+       console.log(curr);
+       
       this.audio.play();
     },
     clickProgress(e) {
-      player.seek(20)
-      console.log(e.pageX)
+      // player.seek(20)
       // this.isTimerPlaying = true;
       // this.audio.pause();
-      // this.updateBar(e.pageX);
+      this.updateBar(e.pageX);
     },
     prevTrack() {
       var index = this.playlist.findIndex(
@@ -602,23 +615,44 @@ export default {
       this.playlist[this.current_video.number - 1].favorite = !this.playlist[
         this.current_video.number - 1
       ].favorite;
+    },
+//     onProgress(currentTime) {
+//       console.log(currentTime);
+      
+//   if(currentTime > 20) {
+//     console.log("the video reached 20 seconds!");
+//   }
+// },
+    onPlayerReady() {
+      var vm =  this;
+  function updateTime () {
+    var oldTime = videotime;
+    if(player && player.getCurrentTime) {
+      videotime = player.getCurrentTime();
     }
+    if(videotime !== oldTime) {
+      vm.generateTime(videotime);
+    }
+  }
+  timeupdater = setInterval(updateTime, 100);
+  console.log(timeupdater,'updater');
+}
   },
-  // created() {
-  //   let vm = this;
-  //   this.currentTrack = this.tracks[0];
-  //   this.audio = new Audio();
-  //   this.audio.src = this.currentTrack.source;
-  //   this.audio.ontimeupdate = function() {
-  //     vm.generateTime();
-  //   };
-  //   this.audio.onloadedmetadata = function() {
-  //     vm.generateTime();
-  //   };
-  //   this.audio.onended = function() {
-  //     vm.nextTrack();
-  //     this.isTimerPlaying = true;
-  //   };
-  // }
+  created() {
+    let vm = this;
+    this.currentTrack = this.tracks[0];
+    this.audio = new Audio();
+    this.audio.src = this.currentTrack.source;
+    this.audio.ontimeupdate = function() {
+      vm.generateTime();
+    };
+    this.audio.onloadedmetadata = function() {
+      vm.generateTime();
+    };
+    this.audio.onended = function() {
+      vm.nextTrack();
+      this.isTimerPlaying = true;
+    };
+  }
 };
 </script>

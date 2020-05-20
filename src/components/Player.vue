@@ -499,10 +499,7 @@ export default {
       this.show_playlist = !this.show_playlist;
     },
     generateTime(time) {
-      var time_in_seconds = this.current_video.duration
-        .split(":")
-        .reverse()
-        .reduce((prev, curr, i) => prev + curr * Math.pow(60, i), 0);
+      var time_in_seconds = this.getTimeinSeconds(this.current_video.duration);
       let width = (100 / time_in_seconds) * time;
       this.barWidth = width + "%";
       this.circleLeft = width + "%";
@@ -631,13 +628,13 @@ export default {
       timeupdater = setInterval(updateTime, 100);
       console.log(timeupdater, "updater");
     },
-    getTimeinSeconds(time){
- return time
+    getTimeinSeconds(time) {
+      return time
         .split(":")
         .reverse()
         .reduce((prev, curr, i) => prev + curr * Math.pow(60, i), 0);
     }
-  },
+  }
   // created() {
   //   let vm = this;
   //   this.currentTrack = this.tracks[0];

@@ -549,7 +549,6 @@ export default {
         video => video.number === this.current_video.number
       );
       if (index == this.playlist.length - 1) {
-        console.log("entered");
         this.current_video = this.playlist[0];
         this.loadVideo();
       } else {
@@ -567,17 +566,27 @@ export default {
       // this.resetPlayer();
     },
     resetPlayer() {
-      this.barWidth = 0;
-      this.circleLeft = 0;
-      this.audio.currentTime = 0;
-      this.audio.src = this.currentTrack.source;
-      setTimeout(() => {
-        if (this.isTimerPlaying) {
-          this.audio.play();
-        } else {
-          this.audio.pause();
-        }
-      }, 300);
+      var index = this.playlist.findIndex(
+        video => video.number === this.current_video.number
+      );
+      if (index == 0) {
+        this.current_video = this.playlist[this.playlist.length - 1];
+        this.loadVideo();
+      } else {
+        this.current_video = this.playlist[index - 1];
+        this.loadVideo();
+      }
+      // this.barWidth = 0;
+      // this.circleLeft = 0;
+      // this.audio.currentTime = 0;
+      // this.audio.src = this.currentTrack.source;
+      // setTimeout(() => {
+      //   if (this.isTimerPlaying) {
+      //     this.audio.play();
+      //   } else {
+      //     this.audio.pause();
+      //   }
+      // }, 300);
     },
     favorite() {
       this.tracks[this.currentTrackIndex].favorited = !this.tracks[

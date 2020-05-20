@@ -410,8 +410,8 @@ export default {
       info: false,
       modestBranding: false,
       events: {
-      'onReady': this.onPlayerReady()
-    }
+        onReady: this.onPlayerReady()
+      }
     });
     // this.generateTime()
   },
@@ -448,7 +448,7 @@ export default {
                 .format("hh:mm:ss");
               this.playlist.push(video);
               this.loadVideo();
-              this.playing = true              
+              this.playing = true;
             } else {
               this.playlist.push(video);
               this.note = `You are ${video.number} in the list`;
@@ -499,16 +499,11 @@ export default {
       this.show_playlist = !this.show_playlist;
     },
     generateTime(time) {
-      var time_in_seconds = this.current_video.duration.split(':').reverse().reduce((prev, curr, i) => prev + curr*Math.pow(60, i), 0)
-      // console.log(this.audio.duration,'audio dur')
-      // console.log(this.current_video.duration,'video dur')
-      // console.log(this.audio.currentTime,'audio curr')
-      // console.log(time,'video curr')
-
-      // let width = (100 / this.audio.duration) * this.audio.currentTime;
+      var time_in_seconds = this.current_video.duration
+        .split(":")
+        .reverse()
+        .reduce((prev, curr, i) => prev + curr * Math.pow(60, i), 0);
       let width = (100 / time_in_seconds) * time;
-      // console.log(t,"width");
-      
       this.barWidth = width + "%";
       this.circleLeft = width + "%";
       let durmin = Math.floor(this.current_video.duration / 60);
@@ -530,7 +525,6 @@ export default {
       this.duration = durmin + ":" + dursec;
       this.currentTime = curmin + ":" + cursec;
       // console.log(this.currentTime);
-      
     },
     updateBar(x) {
       let progress = this.$refs.progress;
@@ -545,9 +539,9 @@ export default {
       }
       this.barWidth = percentage + "%";
       this.circleLeft = percentage + "%";
-       let curr = (maxduration * percentage) / 100;
-       console.log(curr);
-       
+      let curr = (maxduration * percentage) / 100;
+      console.log(curr);
+
       this.audio.play();
     },
     clickProgress(e) {
@@ -616,43 +610,49 @@ export default {
         this.current_video.number - 1
       ].favorite;
     },
-//     onProgress(currentTime) {
-//       console.log(currentTime);
-      
-//   if(currentTime > 20) {
-//     console.log("the video reached 20 seconds!");
-//   }
-// },
+    //     onProgress(currentTime) {
+    //       console.log(currentTime);
+
+    //   if(currentTime > 20) {
+    //     console.log("the video reached 20 seconds!");
+    //   }
+    // },
     onPlayerReady() {
-      var vm =  this;
-  function updateTime () {
-    var oldTime = videotime;
-    if(player && player.getCurrentTime) {
-      videotime = player.getCurrentTime();
+      var vm = this;
+      function updateTime() {
+        var oldTime = videotime;
+        if (player && player.getCurrentTime) {
+          videotime = player.getCurrentTime();
+        }
+        if (videotime !== oldTime) {
+          vm.generateTime(videotime);
+        }
+      }
+      timeupdater = setInterval(updateTime, 100);
+      console.log(timeupdater, "updater");
+    },
+    getTimeinSeconds(time){
+ return time
+        .split(":")
+        .reverse()
+        .reduce((prev, curr, i) => prev + curr * Math.pow(60, i), 0);
     }
-    if(videotime !== oldTime) {
-      vm.generateTime(videotime);
-    }
-  }
-  timeupdater = setInterval(updateTime, 100);
-  console.log(timeupdater,'updater');
-}
   },
-  created() {
-    let vm = this;
-    this.currentTrack = this.tracks[0];
-    this.audio = new Audio();
-    this.audio.src = this.currentTrack.source;
-    this.audio.ontimeupdate = function() {
-      vm.generateTime();
-    };
-    this.audio.onloadedmetadata = function() {
-      vm.generateTime();
-    };
-    this.audio.onended = function() {
-      vm.nextTrack();
-      this.isTimerPlaying = true;
-    };
-  }
+  // created() {
+  //   let vm = this;
+  //   this.currentTrack = this.tracks[0];
+  //   this.audio = new Audio();
+  //   this.audio.src = this.currentTrack.source;
+  //   this.audio.ontimeupdate = function() {
+  //     vm.generateTime();
+  //   };
+  //   this.audio.onloadedmetadata = function() {
+  //     vm.generateTime();
+  //   };
+  //   this.audio.onended = function() {
+  //     vm.nextTrack();
+  //     this.isTimerPlaying = true;
+  //   };
+  // }
 };
 </script>

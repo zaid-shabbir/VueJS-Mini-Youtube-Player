@@ -496,7 +496,6 @@ export default {
     },
     generateTime() {
       console.log(this.audio);
-      
       let width = (100 / this.current_video.duration) * this.time;
       this.barWidth = width + "%";
       this.circleLeft = width + "%";
@@ -518,6 +517,8 @@ export default {
       }
       this.duration = durmin + ":" + dursec;
       this.currentTime = curmin + ":" + cursec;
+      console.log(this.currentTime);
+      
     },
     updateBar(x) {
       let progress = this.$refs.progress;

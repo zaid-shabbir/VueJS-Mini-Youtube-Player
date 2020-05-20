@@ -406,7 +406,8 @@ export default {
       controls: false,
       annotations: false,
       related: false,
-      info: false
+      info: true,
+      modestBranding: false
     });
   },
   methods: {
@@ -537,15 +538,25 @@ export default {
       this.updateBar(e.pageX);
     },
     prevTrack() {
-      this.transitionName = "scale-in";
-      this.isShowCover = false;
-      if (this.currentTrackIndex > 0) {
-        this.currentTrackIndex--;
+      var index = this.playlist.findIndex(
+        video => video.number === this.current_video.number
+      );
+      if (index == 0) {
+        this.current_video = this.playlist[this.playlist.length - 1];
+        this.loadVideo();
       } else {
-        this.currentTrackIndex = this.tracks.length - 1;
+        this.current_video = this.playlist[index - 1];
+        this.loadVideo();
       }
-      this.currentTrack = this.tracks[this.currentTrackIndex];
-      this.resetPlayer();
+      // this.transitionName = "scale-in";
+      // this.isShowCover = false;
+      // if (this.currentTrackIndex > 0) {
+      //   this.currentTrackIndex--;
+      // } else {
+      //   this.currentTrackIndex = this.tracks.length - 1;
+      // }
+      // this.currentTrack = this.tracks[this.currentTrackIndex];
+      // this.resetPlayer();
     },
     nextTrack() {
       var index = this.playlist.findIndex(
@@ -569,16 +580,6 @@ export default {
       // this.resetPlayer();
     },
     resetPlayer() {
-      var index = this.playlist.findIndex(
-        video => video.number === this.current_video.number
-      );
-      if (index == 0) {
-        this.current_video = this.playlist[this.playlist.length - 1];
-        this.loadVideo();
-      } else {
-        this.current_video = this.playlist[index - 1];
-        this.loadVideo();
-      }
       // this.barWidth = 0;
       // this.circleLeft = 0;
       // this.audio.currentTime = 0;

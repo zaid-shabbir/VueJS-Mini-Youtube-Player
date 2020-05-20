@@ -6,6 +6,7 @@
           <div class="player-cover">
             <div class="video">
               <iframe
+                id="video"
                 class="iframe"
                 width="340"
                 height="190"
@@ -430,19 +431,18 @@ export default {
     play() {
       if (this.playlist.length == 0) {
         this.note = "Add Videos to play.";
-      } else if (this.playlist.length == 1) {
-        this.current_video.number = this.playlist[0].number;
-        this.current_video.video_id = this.playlist[0].video_id;
-        this.current_video.title = this.playlist[0].title;
-        this.current_video.duration = this.playlist[0].duration;
-      }
-      if (this.audio.paused) {
-        this.audio.play();
-        this.isTimerPlaying = true;
       } else {
-        this.audio.pause();
-        this.isTimerPlaying = false;
+        $("#video")[0].src += "&autoplay=1";
+        // this.audio.play();
+        this.isTimerPlaying = true;
       }
+      // if (this.audio.paused) {
+      //   this.audio.play();
+      //   this.isTimerPlaying = true;
+      // } else {
+      //   this.audio.pause();
+      //   this.isTimerPlaying = false;
+      // }
     },
     generateTime() {
       let width = (100 / this.audio.duration) * this.audio.currentTime;

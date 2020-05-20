@@ -12,6 +12,7 @@
                 height="190"
                 frameborder="0"
                 scrolling="no"
+                data-play="0"
                 :src="srcUrl"
               >
               </iframe>
@@ -344,7 +345,7 @@ export default {
       isTimerPlaying: false,
       current_video: {
         number: 0,
-        video_id: "",
+        video_id: "MPFKsSFnu40",
         title: "Title",
         duration: "00:00"
       },
@@ -380,17 +381,19 @@ export default {
   },
   computed: {
     srcUrl() {
-      return `https://www.youtube.com/embed/${this.current_video.video_id}?controls=0`;
+      return `https://www.youtube.com/embed/${this.current_video.video_id}?controls=0?enablejsapi=1`;
     }
   },
-  // mounted() {
-  //   $.getJSON(
-  //     "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
-  //     function(data) {
-  //       console.log(data.items[0]);
-  //     }
-  //   );
-  // },
+  mounted() {
+
+
+    // $.getJSON(
+    //   "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
+    //   function(data) {
+    //     console.log(data.items[0]);
+    //   }
+    // );
+  },
   methods: {
     getVideoId(url) {
       var video_id = url.split("v=")[1];
@@ -429,13 +432,21 @@ export default {
       );
     },
     play() {
-      if (this.playlist.length == 0) {
-        this.note = "Add Videos to play.";
-      } else {
+      var dataplay = $("#video").attr("data-play");
+      if (dataplay == 0) {
         $("#video")[0].src += "&autoplay=1";
-        // this.audio.play();
-        this.isTimerPlaying = true;
+        $("#video").attr("data-play", 1);
+      } else {
+        var ysrc = document.getElementById("video").src;
+        var newsrc = ysrc.replace("&autoplay=1", "");
+        document.getElementById("video").src = newsrc;
       }
+      // if (this.playlist.length == 0) {
+      //   this.note = "Add Videos to play.";
+      // } else {
+      // $("#video")[0].src += "&autoplay=1";
+      // this.isTimerPlaying = true;
+      // }
       // if (this.audio.paused) {
       //   this.audio.play();
       //   this.isTimerPlaying = true;

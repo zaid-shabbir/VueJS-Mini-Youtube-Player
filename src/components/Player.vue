@@ -436,6 +436,12 @@ export default {
     loadVideo() {
       player.load(this.current_video.video_id);
       player.setVolume(100);
+      player.on("playing", () => {
+        this.isTimerPlaying = true;
+      });
+      player.on("paused", () => {
+        this.isTimerPlaying = false;
+      });
     },
     play() {
       if (this.playlist.length == 0) {

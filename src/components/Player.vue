@@ -380,11 +380,6 @@ export default {
       transitionName: null
     };
   },
-  computed: {
-    srcUrl() {
-      return `https://www.youtube.com/embed/${this.current_video.video_id}?controls=0?enablejsapi=1`;
-    }
-  },
   mounted() {
     // this.loadVideo()
     //     // $.getJSON(

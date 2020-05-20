@@ -45,7 +45,6 @@
         <div class="progress" ref="progress">
           <div class="album-info__name">{{ current_video.title }}</div>
           <div class="progress__top">
-            <div class="album-info" v-if="currentTrack"></div>
             <div class="progress__duration">{{ current_video.duration }}</div>
           </div>
           <div class="progress__bar" @click="clickProgress">
@@ -355,6 +354,7 @@ export default {
       duration: null,
       currentTime: null,
       isTimerPlaying: false,
+      time: null,
       playing: false,
       show_playlist: false,
       current_video: {
@@ -406,9 +406,10 @@ export default {
       controls: false,
       annotations: false,
       related: false,
-      info: true,
+      info: false,
       modestBranding: false
     });
+    this.generateTime()
   },
   methods: {
     getVideoId(url) {
@@ -494,13 +495,15 @@ export default {
       this.show_playlist = !this.show_playlist;
     },
     generateTime() {
-      let width = (100 / this.audio.duration) * this.audio.currentTime;
+      console.log(this.audio);
+      
+      let width = (100 / this.current_video.duration) * this.time;
       this.barWidth = width + "%";
       this.circleLeft = width + "%";
-      let durmin = Math.floor(this.audio.duration / 60);
-      let dursec = Math.floor(this.audio.duration - durmin * 60);
-      let curmin = Math.floor(this.audio.currentTime / 60);
-      let cursec = Math.floor(this.audio.currentTime - curmin * 60);
+      let durmin = Math.floor(this.current_video.duration / 60);
+      let dursec = Math.floor(this.current_video.duration - durmin * 60);
+      let curmin = Math.floor(this.time / 60);
+      let cursec = Math.floor(this.time - curmin * 60);
       if (durmin < 10) {
         durmin = "0" + durmin;
       }
@@ -518,7 +521,7 @@ export default {
     },
     updateBar(x) {
       let progress = this.$refs.progress;
-      let maxduration = this.audio.duration;
+      let maxduration = this.current_video.duration;
       let position = x - progress.offsetLeft;
       let percentage = (100 * position) / progress.offsetWidth;
       if (percentage > 100) {
@@ -529,13 +532,15 @@ export default {
       }
       this.barWidth = percentage + "%";
       this.circleLeft = percentage + "%";
-      this.audio.currentTime = (maxduration * percentage) / 100;
+      this.time = (maxduration * percentage) / 100;
       this.audio.play();
     },
     clickProgress(e) {
-      this.isTimerPlaying = true;
-      this.audio.pause();
-      this.updateBar(e.pageX);
+      player.seek(20)
+      console.log(e.pageX)
+      // this.isTimerPlaying = true;
+      // this.audio.pause();
+      // this.updateBar(e.pageX);
     },
     prevTrack() {
       var index = this.playlist.findIndex(
@@ -598,21 +603,21 @@ export default {
       ].favorite;
     }
   },
-  created() {
-    let vm = this;
-    this.currentTrack = this.tracks[0];
-    this.audio = new Audio();
-    this.audio.src = this.currentTrack.source;
-    this.audio.ontimeupdate = function() {
-      vm.generateTime();
-    };
-    this.audio.onloadedmetadata = function() {
-      vm.generateTime();
-    };
-    this.audio.onended = function() {
-      vm.nextTrack();
-      this.isTimerPlaying = true;
-    };
-  }
+  // created() {
+  //   let vm = this;
+  //   this.currentTrack = this.tracks[0];
+  //   this.audio = new Audio();
+  //   this.audio.src = this.currentTrack.source;
+  //   this.audio.ontimeupdate = function() {
+  //     vm.generateTime();
+  //   };
+  //   this.audio.onloadedmetadata = function() {
+  //     vm.generateTime();
+  //   };
+  //   this.audio.onended = function() {
+  //     vm.nextTrack();
+  //     this.isTimerPlaying = true;
+  //   };
+  // }
 };
 </script>

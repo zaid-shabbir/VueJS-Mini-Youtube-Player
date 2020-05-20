@@ -160,9 +160,7 @@ body {
   user-select: none;
 }
 .progress__top {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  text-align: right;
 }
 .progress__duration {
   color: #71829e;
@@ -170,6 +168,7 @@ body {
   font-size: 20px;
   opacity: 0.5;
   margin-bottom: -10px;
+  
 }
 .progress__time {
   color: #71829e;

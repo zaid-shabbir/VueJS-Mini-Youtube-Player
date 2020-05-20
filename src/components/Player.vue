@@ -5,26 +5,9 @@
         <div class="player__top">
           <div class="player-cover">
             <div class="video">
-              <div id="video"></div>
-              <!-- <iframe
-                id="video"
-                class="iframe"
-                frameborder="0"
-                scrolling="no"
-                data-play="0"
-                :src="srcUrl"
-              >
-              </iframe>
+              <img v-if="!playing" src="../assets/images/img.jpg" class="default-image" alt="Default Image">
+              <div v-if="playing" id="video"></div>
             </div>
-            <transition-group :name="transitionName">
-              <div
-                class="player-cover__item"
-                v-if="$index === currentTrackIndex"
-                :style="{ backgroundImage: `url(${track.cover})` }"
-                v-for="(track, $index) in tracks"
-                :key="$index"
-              ></div>
-            </transition-group> -->
           </div>
           <div class="player-controls">
             <div
@@ -345,6 +328,7 @@ export default {
       duration: null,
       currentTime: null,
       isTimerPlaying: false,
+      playing: false,
       current_video: {
         number: 0,
         video_id: "MPFKsSFnu40",
@@ -387,30 +371,6 @@ export default {
     }
   },
   mounted() {
-    //     var player;
-    //     YouTubeIframeLoader.load(function(YT) {
-    //     new YT.Player('video', {
-    //         height: '390',
-    //         width: '640',
-    //         videoId: 'M7lc1UVf-VE'
-    //     });
-    // });
-    //     function onPlayerReady() {
-    //       var playButton = document.getElementById("play-button");
-    //       playButton.addEventListener("click", function() {
-    //         console.log(player);
-    //         player.playVideo();
-    //       });
-    //       var pauseButton = document.getElementById("pause-button");
-    //       pauseButton.addEventListener("click", function() {
-    //         player.pauseVideo();
-    //       });
-    //     }
-    //     // Inject YouTube API script
-    //     var tag = document.createElement("script");
-    //     tag.src = "//www.youtube.com/AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y";
-    //     var firstScriptTag = document.getElementsByTagName("script")[0];
-    //     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     //     // $.getJSON(
     //   "https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=APiOE0Rtg50&key=AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
     //   function(data) {
@@ -456,10 +416,9 @@ export default {
       );
     },
     play() {
-      const player = new YTPlayer("#video", { width: 340, height: 190 });
-      console.log(player);
-
-      player.load("CVvJp3d8xGQ", true);
+      this.playing = true;
+      const player = new YTPlayer("#video", { width: 360, height: 200, controls: false, annotations : false, related : false, info :false });
+      player.load(this.current_video.video_id, true);
       player.setVolume(100);
       player.on("playing", () => {
         console.log(player.getDuration()); // => 351.521

@@ -97,14 +97,28 @@
       <div v-if="show_playlist && !note" class="playlist">
         <div class="next-video-title">Next Video</div>
         <div class="video-detail">
-          <div v-if="playlist.length > 1" class="video-title">
-            {{ playlist[current_video.number].number }}.&nbsp;{{
-              playlist[current_video.number].title
-            }}
+          <div v-if="playlist.length > 1">
+            <div
+              v-if="current_video.number < playlist.length"
+              class="video-title"
+            >
+              {{ playlist[current_video.number].number }}.&nbsp;{{
+                playlist[current_video.number].title
+              }}
+            </div>
+            <div v-else class="video-title">
+              {{ playlist[0].number }}.&nbsp;{{ playlist[0].title }}
+            </div>
           </div>
           <div v-if="playlist.length > 1" class="video-duration-container">
-            <div class="video-duration">
+            <div
+              v-if="current_video.number < playlist.length"
+              class="video-duration"
+            >
               {{ playlist[current_video.number].duration }}
+            </div>
+            <div v-else class="video-duration">
+              {{ playlist[0].duration }}
             </div>
             <svg
               height="20"
@@ -129,11 +143,17 @@
           <div class="que-title">QueList</div>
           <div v-for="(video, index) in playlist" :key="index">
             <div v-if="playlist.length > 1" class="video-detail">
-              <div class="video-title" :class="{active : video.number  == current_video.number}">
+              <div
+                class="video-title"
+                :class="{ active: video.number == current_video.number }"
+              >
                 {{ video.number }}.&nbsp;{{ video.title }}
               </div>
               <div class="video-duration-container">
-                <div class="video-duration" :class="{active : video.number  == current_video.number}">
+                <div
+                  class="video-duration"
+                  :class="{ active: video.number == current_video.number }"
+                >
                   {{ video.duration }}
                 </div>
                 <svg
@@ -411,7 +431,7 @@ export default {
               .format("hh:mm:ss");
             video.number = this.playlist.length + 1;
             if (this.playlist.length == 0) {
-              this.current_video.number = 1;
+              this.current_video.number = video.number;
               this.current_video.video_id = video_id;
               this.current_video.title = data.items[0].snippet.title;
               this.current_video.duration = moment
@@ -525,12 +545,30 @@ export default {
       this.resetPlayer();
     },
     nextTrack() {
-      var video_number = this.current_video.number;
-      this.current_video.number = this.playlist[video_number].number;
-      this.current_video.video_id = this.playlist[video_number].video_id;
-      this.current_video.title = this.playlist[video_number].title;
-      this.current_video.duration = this.playlist[video_number].duration;
-      this.loadVideo();
+      var index = this.playlist.findIndex(
+        video => video.number === this.current_video.number
+      );
+      console.log(index, "index");
+      console.log(this.playlist[index + 1], "next track");
+
+      if (index == this.playlist.length - 1) {
+        console.log("entered");
+        // this.current_video.number = this.playlist[0].number;
+        // this.current_video.video_id = this.playlist[0].video_id;
+        // this.current_video.title = this.playlist[0].title;
+        // this.current_video.duration = this.playlist[0].duration;
+        // this.loadVideo();
+      } else {
+        this.current_video = this.playlist[index + 1];
+        console.log(this.current_video);
+
+        // this.current_video.number = this.playlist[index+1].number;
+        // this.current_video.video_id = this.playlist[index+1].video_id;
+        // this.current_video.title = this.playlist[index+1].title;
+        // this.current_video.duration = this.playlist[index+1].duration;
+        // this.loadVideo();
+      }
+
       // this.transitionName = "scale-out";
       // this.isShowCover = false;
       // if (this.currentTrackIndex < this.tracks.length - 1) {

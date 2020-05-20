@@ -452,3 +452,6 @@ border: 0.5px solid #FFFFFF1A;
   width: 360px;
   height: 200px;
 }
+.active{
+  color: white;
+}

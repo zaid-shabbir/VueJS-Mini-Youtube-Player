@@ -125,15 +125,15 @@
             </svg>
           </div>
         </div>
-        <div id="style-1" class="que-list-container" v-if="playlist.length > 2">
+        <div id="style-1" class="que-list-container" v-if="playlist.length > 1">
           <div class="que-title">QueList</div>
           <div v-for="(video, index) in playlist" :key="index">
-            <div v-if="index > 1" class="video-detail">
-              <div class="video-title">
+            <div v-if="playlist.length > 1" class="video-detail">
+              <div class="video-title" :class="{active : video.number  == current_video.number}">
                 {{ video.number }}.&nbsp;{{ video.title }}
               </div>
               <div class="video-duration-container">
-                <div class="video-duration">
+                <div class="video-duration" :class="{active : video.number  == current_video.number}">
                   {{ video.duration }}
                 </div>
                 <svg
@@ -155,7 +155,7 @@
                 </svg>
               </div>
             </div>
-            <hr v-if="index > 1" class="playlist-hr" />
+            <hr v-if="playlist.length > 1" class="playlist-hr" />
           </div>
         </div>
 
@@ -424,6 +424,7 @@ export default {
               this.playlist.push(video);
               this.note = `You are ${video.number} in the list`;
             }
+            // this.url = "";
             console.log(this.playlist);
             console.log(this.current_video);
           }
@@ -529,7 +530,7 @@ export default {
       this.current_video.video_id = this.playlist[video_number].video_id;
       this.current_video.title = this.playlist[video_number].title;
       this.current_video.duration = this.playlist[video_number].duration;
-      this.loadVideo()
+      this.loadVideo();
       // this.transitionName = "scale-out";
       // this.isShowCover = false;
       // if (this.currentTrackIndex < this.tracks.length - 1) {

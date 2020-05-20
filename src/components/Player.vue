@@ -17,7 +17,7 @@
           <div class="player-controls">
             <div
               class="player-controls__item -favorite"
-              :class="{ active: currentTrack.favorited }"
+              :class="{ active: current_video.favorite }"
               @click="favorite"
             >
               <svg class="icon">
@@ -361,7 +361,8 @@ export default {
         number: 0,
         video_id: "",
         title: "Title",
-        duration: "00:00"
+        duration: "00:00",
+        favorite: false
       },
       url: "",
       playlist: [],
@@ -430,7 +431,9 @@ export default {
               .duration(data.items[0].contentDetails.duration)
               .format("hh:mm:ss");
             video.number = this.playlist.length + 1;
+            video.favorite = false;
             if (this.playlist.length == 0) {
+              this.current_video.favorite = false;
               this.current_video.number = video.number;
               this.current_video.video_id = video_id;
               this.current_video.title = data.items[0].snippet.title;
@@ -589,9 +592,9 @@ export default {
       // }, 300);
     },
     favorite() {
-      this.tracks[this.currentTrackIndex].favorited = !this.tracks[
-        this.currentTrackIndex
-      ].favorited;
+      this.playlist[this.current_video.number - 1].favorite = !this.playlist[
+        this.current_video.number - 1
+      ].favorite;
     }
   },
   created() {

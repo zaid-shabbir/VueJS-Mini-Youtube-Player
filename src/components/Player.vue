@@ -548,27 +548,14 @@ export default {
       var index = this.playlist.findIndex(
         video => video.number === this.current_video.number
       );
-      console.log(index, "index");
-      console.log(this.playlist[index + 1], "next track");
-
       if (index == this.playlist.length - 1) {
         console.log("entered");
-        // this.current_video.number = this.playlist[0].number;
-        // this.current_video.video_id = this.playlist[0].video_id;
-        // this.current_video.title = this.playlist[0].title;
-        // this.current_video.duration = this.playlist[0].duration;
-        // this.loadVideo();
+        this.current_video = this.playlist[0];
+        this.loadVideo();
       } else {
         this.current_video = this.playlist[index + 1];
-        console.log(this.current_video);
-
-        // this.current_video.number = this.playlist[index+1].number;
-        // this.current_video.video_id = this.playlist[index+1].video_id;
-        // this.current_video.title = this.playlist[index+1].title;
-        // this.current_video.duration = this.playlist[index+1].duration;
-        // this.loadVideo();
+        this.loadVideo();
       }
-
       // this.transitionName = "scale-out";
       // this.isShowCover = false;
       // if (this.currentTrackIndex < this.tracks.length - 1) {

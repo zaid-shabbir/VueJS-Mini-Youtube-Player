@@ -525,7 +525,7 @@ export default {
     },
     updateBar(x) {
       let progress = this.$refs.progress;
-      let maxduration = this.current_video.duration;
+      let maxduration = this.getTimeinSeconds(this.current_video.duration);
       let position = x - progress.offsetLeft;
       let percentage = (100 * position) / progress.offsetWidth;
       if (percentage > 100) {
@@ -536,10 +536,11 @@ export default {
       }
       this.barWidth = percentage + "%";
       this.circleLeft = percentage + "%";
-      let curr = (maxduration * percentage) / 100;
-      console.log(curr);
+      let jump_to = (maxduration * percentage) / 100;
+      player.seek(jump_to)
+      console.log(jump_to);
 
-      this.audio.play();
+      // this.audio.play();
     },
     clickProgress(e) {
       // player.seek(20)

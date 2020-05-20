@@ -385,8 +385,7 @@ export default {
       controls: false,
       annotations: false,
       related: false,
-      info: false,
-      autoplay: false
+      info: false
     });
   },
   methods: {
@@ -434,7 +433,7 @@ export default {
       }
     },
     loadVideo() {
-      player.load(this.current_video.video_id);
+      player.load(this.current_video.video_id, true);
       player.setVolume(100);
       player.on("playing", () => {
         this.isTimerPlaying = true;
@@ -525,15 +524,21 @@ export default {
       this.resetPlayer();
     },
     nextTrack() {
-      this.transitionName = "scale-out";
-      this.isShowCover = false;
-      if (this.currentTrackIndex < this.tracks.length - 1) {
-        this.currentTrackIndex++;
-      } else {
-        this.currentTrackIndex = 0;
-      }
-      this.currentTrack = this.tracks[this.currentTrackIndex];
-      this.resetPlayer();
+      var video_number = this.current_video.number;
+      this.current_video.number = this.playlist[video_number].number;
+      this.current_video.video_id = this.playlist[video_number].video_id;
+      this.current_video.title = this.playlist[video_number].title;
+      this.current_video.duration = this.playlist[video_number].duration;
+      this.loadVideo()
+      // this.transitionName = "scale-out";
+      // this.isShowCover = false;
+      // if (this.currentTrackIndex < this.tracks.length - 1) {
+      //   this.currentTrackIndex++;
+      // } else {
+      //   this.currentTrackIndex = 0;
+      // }
+      // this.currentTrack = this.tracks[this.currentTrackIndex];
+      // this.resetPlayer();
     },
     resetPlayer() {
       this.barWidth = 0;

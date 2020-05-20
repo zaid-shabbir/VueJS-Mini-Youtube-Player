@@ -439,11 +439,12 @@ border: 0.5px solid #FFFFFF1A;
   cursor: pointer;
 }
 #youtube-player{
-  border-radius: 10px;
+  border-radius: 8px;
 }
 .default-image{
   width: 360px;
   height: 200px;
+  border-radius: 8px;
 }
 .active{
   color: white;

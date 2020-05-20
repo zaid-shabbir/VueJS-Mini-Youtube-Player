@@ -50,7 +50,8 @@
           <div class="progress__bar" @click="clickProgress">
             <div class="progress__current" :style="{ width: barWidth }"></div>
           </div>
-          <div class="progress__time">{{ currentTime }}</div>
+          <div v-if="!currentTime" class="progress__time">00:00</div>
+          <div v-if="currentTime" class="progress__time">{{ currentTime }}</div>
         </div>
         <div class="add_link">
           <label class="youtube_link_label" for="youtube_link"
@@ -395,11 +396,6 @@ export default {
       transitionName: null
     };
   },
-  // computed: {
-  //   srcUrl() {
-  //     return `https://www.youtube.com/embed/${this.current_video.video_id}?controls=0?enablejsapi=1`;
-  //   }
-  // },
   mounted() {
     player = new YTPlayer("#youtube-player", {
       width: 360,
@@ -413,7 +409,6 @@ export default {
         onReady: this.onPlayerReady()
       }
     });
-    // this.generateTime()
   },
   methods: {
     getVideoId(url) {
@@ -454,8 +449,6 @@ export default {
               this.note = `You are ${video.number} in the list`;
             }
             // this.url = "";
-            console.log(this.playlist);
-            console.log(this.current_video);
           }
         );
       } else {

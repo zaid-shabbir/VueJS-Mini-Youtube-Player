@@ -527,7 +527,7 @@ export default {
       this.barWidth = percentage + "%";
       this.circleLeft = percentage + "%";
       let jump_to = (maxduration * percentage) / 100;
-      player.seek(jump_to)
+      player.seek(jump_to);
     },
     clickProgress(e) {
       this.updateBar(e.pageX);

@@ -5,8 +5,13 @@
         <div class="player__top">
           <div class="player-cover">
             <div class="video">
-              <img v-if="!playing" src="../assets/images/img.jpg" class="default-image" alt="Default Image">
-              <div v-if="playing" id="video"></div>
+              <img
+                v-if="!playing"
+                src="../assets/images/img.jpg"
+                class="default-image"
+                alt="Default Image"
+              />
+              <div id="video"></div>
             </div>
           </div>
           <div class="player-controls">
@@ -317,6 +322,14 @@ momentDurationFormatSetup(moment);
 // var YouTubeIframeLoader = require("youtube-iframe");
 const YTPlayer = require("yt-player");
 // const player = new YTPlayer("#video");
+const player = new YTPlayer("#video", {
+        width: 360,
+        height: 200,
+        controls: false,
+        annotations: false,
+        related: false,
+        info: false
+      });
 export default {
   name: "Player",
   data() {
@@ -415,30 +428,15 @@ export default {
         }
       );
     },
-    play() {
-      this.playing = true;
-      const player = new YTPlayer("#video", { width: 360, height: 200, controls: false, annotations : false, related : false, info :false });
+    loadVideo(){
       player.load(this.current_video.video_id, true);
       player.setVolume(100);
-      player.on("playing", () => {
-        console.log(player.getDuration()); // => 351.521
-      });
+    },
+    play() {
+      this.loadVideo()
+      this.playing = true;
       player.play();
-      // var dataplay = $("#video").attr("data-play");
-      // if (dataplay == 0) {
-      //   $("#video")[0].src += "&autoplay=1";
-      //   $("#video").attr("data-play", 1);
-      // } else {
-      //   var ysrc = document.getElementById("video").src;
-      //   var newsrc = ysrc.replace("&autoplay=1", "");
-      //   document.getElementById("video").src = newsrc;
-      // }
-      // if (this.playlist.length == 0) {
-      //   this.note = "Add Videos to play.";
-      // } else {
-      // $("#video")[0].src += "&autoplay=1";
-      // this.isTimerPlaying = true;
-      // }
+        this.isTimerPlaying = true;
       // if (this.audio.paused) {
       //   this.audio.play();
       //   this.isTimerPlaying = true;

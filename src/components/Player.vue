@@ -503,25 +503,15 @@ export default {
       let width = (100 / time_in_seconds) * time;
       this.barWidth = width + "%";
       this.circleLeft = width + "%";
-      let durmin = Math.floor(this.current_video.duration / 60);
-      let dursec = Math.floor(this.current_video.duration - durmin * 60);
       let curmin = Math.floor(time / 60);
       let cursec = Math.floor(time - curmin * 60);
-      if (durmin < 10) {
-        durmin = "0" + durmin;
-      }
-      if (dursec < 10) {
-        dursec = "0" + dursec;
-      }
       if (curmin < 10) {
         curmin = "0" + curmin;
       }
       if (cursec < 10) {
         cursec = "0" + cursec;
       }
-      this.duration = durmin + ":" + dursec;
       this.currentTime = curmin + ":" + cursec;
-      // console.log(this.currentTime);
     },
     updateBar(x) {
       let progress = this.$refs.progress;
@@ -538,14 +528,8 @@ export default {
       this.circleLeft = percentage + "%";
       let jump_to = (maxduration * percentage) / 100;
       player.seek(jump_to)
-      console.log(jump_to);
-
-      // this.audio.play();
     },
     clickProgress(e) {
-      // player.seek(20)
-      // this.isTimerPlaying = true;
-      // this.audio.pause();
       this.updateBar(e.pageX);
     },
     prevTrack() {

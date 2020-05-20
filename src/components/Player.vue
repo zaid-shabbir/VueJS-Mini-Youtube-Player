@@ -94,7 +94,7 @@
           <input type="checkbox" id="checkbox" checked />
         </div>
       </div>
-      <div v-show="true" class="playlist">
+      <div v-if="show_playlist" class="playlist">
         <div class="next-video-title">Next Video</div>
         <div class="video-detail">
           <div v-if="playlist.length > 1" class="video-title">
@@ -209,7 +209,7 @@
           ></path>
         </svg>
       </div>
-      <div class="playlist-toggler">
+      <div v-if="!note" @click="togglePlaylist" class="playlist-toggler">
         <hr class="see-playlist" />
       </div>
     </div>
@@ -343,6 +343,7 @@ export default {
       currentTime: null,
       isTimerPlaying: false,
       playing: false,
+      show_playlist: false,
       current_video: {
         number: 0,
         video_id: "",
@@ -459,6 +460,9 @@ export default {
     },
     removeNote() {
       this.note = "";
+    },
+    togglePlaylist() {
+      this.show_playlist = !this.show_playlist;
     },
     generateTime() {
       let width = (100 / this.audio.duration) * this.audio.currentTime;

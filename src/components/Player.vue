@@ -145,14 +145,18 @@
             <div v-if="playlist.length > 1" class="video-detail">
               <div
                 class="video-title"
-                :class="{ active: video.number == current_video.number }"
+                :class="{
+                  active: video.number == playlist[playlist.length - 1].number
+                }"
               >
                 {{ video.number }}.&nbsp;{{ video.title }}
               </div>
               <div class="video-duration-container">
                 <div
                   class="video-duration"
-                  :class="{ active: video.number == current_video.number }"
+                  :class="{
+                    active: video.number == playlist[playlist.length - 1].number
+                  }"
                 >
                   {{ video.duration }}
                 </div>

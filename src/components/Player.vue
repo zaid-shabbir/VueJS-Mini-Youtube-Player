@@ -349,14 +349,11 @@ export default {
   data() {
     return {
       api_key: "AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
-      // audio: null,
       circleLeft: null,
       barWidth: null,
-      // duration: null,
       currentTime: null,
       isTimerPlaying: false,
       videotime: 0,
-      // time: null,
       playing: false,
       show_playlist: false,
       current_video: {
@@ -369,31 +366,6 @@ export default {
       url: "https://www.youtube.com/watch?v=Il7Nv270zNk",
       playlist: [],
       note: ""
-      // tracks: [
-      //   {
-      //     name: "Mekanın Sahibi",
-      //     artist: "Norm Ender",
-      //     cover:
-      //       "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/1.jpg",
-      //     source:
-      //       "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/1.mp3",
-      //     url: "https://www.youtube.com/watch?v=z3wAjJXbYzA",
-      //     favorited: false
-      //   },
-      //   {
-      //     name: "Everybody Knows",
-      //     artist: "Leonard Cohen",
-      //     cover:
-      //       "https://raw.githubusercontent.com/muhammederdem/mini-player/master/img/2.jpg",
-      //     source:
-      //       "https://raw.githubusercontent.com/muhammederdem/mini-player/master/mp3/2.mp3",
-      //     url: "https://www.youtube.com/watch?v=Lin-a2lTelg",
-      //     favorited: true
-      //   }
-      // ],
-      // currentTrack: null,
-      // currentTrackIndex: 0,
-      // transitionName: null
     };
   },
   mounted() {
@@ -477,13 +449,6 @@ export default {
           this.isTimerPlaying = false;
         }
       }
-      // if (this.audio.paused) {
-      //   this.audio.play();
-      //   this.isTimerPlaying = true;
-      // } else {
-      //   this.audio.pause();
-      //   this.isTimerPlaying = false;
-      // }
     },
     removeNote() {
       this.note = "";
@@ -536,15 +501,6 @@ export default {
         this.current_video = this.playlist[index - 1];
         this.loadVideo();
       }
-      // this.transitionName = "scale-in";
-      // this.isShowCover = false;
-      // if (this.currentTrackIndex > 0) {
-      //   this.currentTrackIndex--;
-      // } else {
-      //   this.currentTrackIndex = this.tracks.length - 1;
-      // }
-      // this.currentTrack = this.tracks[this.currentTrackIndex];
-      // this.resetPlayer();
     },
     nextTrack() {
       var index = this.playlist.findIndex(
@@ -557,15 +513,6 @@ export default {
         this.current_video = this.playlist[index + 1];
         this.loadVideo();
       }
-      // this.transitionName = "scale-out";
-      // this.isShowCover = false;
-      // if (this.currentTrackIndex < this.tracks.length - 1) {
-      //   this.currentTrackIndex++;
-      // } else {
-      //   this.currentTrackIndex = 0;
-      // }
-      // this.currentTrack = this.tracks[this.currentTrackIndex];
-      // this.resetPlayer();
     },
     resetPlayer() {
       // this.barWidth = 0;
@@ -585,13 +532,6 @@ export default {
         this.current_video.number - 1
       ].favorite;
     },
-    //     onProgress(currentTime) {
-    //       console.log(currentTime);
-
-    //   if(currentTime > 20) {
-    //     console.log("the video reached 20 seconds!");
-    //   }
-    // },
     onPlayerReady() {
       var vm = this;
       function updateTime() {
@@ -613,21 +553,5 @@ export default {
         .reduce((prev, curr, i) => prev + curr * Math.pow(60, i), 0);
     }
   }
-  // created() {
-  //   let vm = this;
-  //   this.currentTrack = this.tracks[0];
-  //   this.audio = new Audio();
-  //   this.audio.src = this.currentTrack.source;
-  //   this.audio.ontimeupdate = function() {
-  //     vm.generateTime();
-  //   };
-  //   this.audio.onloadedmetadata = function() {
-  //     vm.generateTime();
-  //   };
-  //   this.audio.onended = function() {
-  //     vm.nextTrack();
-  //     this.isTimerPlaying = true;
-  //   };
-  // }
 };
 </script>

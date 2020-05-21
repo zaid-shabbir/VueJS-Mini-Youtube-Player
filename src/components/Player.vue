@@ -452,7 +452,7 @@ export default {
           }
         );
       } else {
-        this.note = "Please enter a valid link";
+        this.note = "Please enter a valid link!";
       }
     },
     loadVideo() {

@@ -355,7 +355,7 @@ export default {
       // duration: null,
       currentTime: null,
       isTimerPlaying: false,
-      videotime : 0,
+      videotime: 0,
       // time: null,
       playing: false,
       show_playlist: false,
@@ -368,7 +368,7 @@ export default {
       },
       url: "https://www.youtube.com/watch?v=Il7Nv270zNk",
       playlist: [],
-      note: "",
+      note: ""
       // tracks: [
       //   {
       //     name: "Mekanın Sahibi",

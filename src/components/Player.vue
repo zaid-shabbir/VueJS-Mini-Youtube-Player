@@ -323,7 +323,6 @@ import $ from "jquery";
 var moment = require("moment");
 var momentDurationFormatSetup = require("moment-duration-format");
 momentDurationFormatSetup(moment);
-// var YouTubeIframeLoader = require("youtube-iframe");
 const YTPlayer = require("yt-player");
 var player;
 var timeupdater = null;

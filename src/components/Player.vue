@@ -514,19 +514,18 @@ export default {
         this.loadVideo();
       }
     },
-    resetPlayer() {
-      // this.barWidth = 0;
-      // this.circleLeft = 0;
-      // this.audio.currentTime = 0;
-      // this.audio.src = this.currentTrack.source;
-      // setTimeout(() => {
-      //   if (this.isTimerPlaying) {
-      //     this.audio.play();
-      //   } else {
-      //     this.audio.pause();
-      //   }
-      // }, 300);
-    },
+    // resetPlayer() {
+    //   this.barWidth = 0;
+    //   this.circleLeft = 0;
+    //   this.videotime = 0;
+    //   setTimeout(() => {
+    //     if (this.isTimerPlaying) {
+    //       this.audio.play();
+    //     } else {
+    //       this.audio.pause();
+    //     }
+    //   }, 300);
+    // },
     favorite() {
       this.playlist[this.current_video.number - 1].favorite = !this.playlist[
         this.current_video.number - 1

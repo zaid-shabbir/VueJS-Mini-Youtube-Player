@@ -349,14 +349,14 @@ export default {
   data() {
     return {
       api_key: "AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
-      audio: null,
+      // audio: null,
       circleLeft: null,
       barWidth: null,
-      duration: null,
+      // duration: null,
       currentTime: null,
       isTimerPlaying: false,
       videotime : 0,
-      time: null,
+      // time: null,
       playing: false,
       show_playlist: false,
       current_video: {

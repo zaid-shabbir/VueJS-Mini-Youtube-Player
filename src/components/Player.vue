@@ -436,6 +436,9 @@ export default {
       player.on("paused", () => {
         this.isTimerPlaying = false;
       });
+      player.on("ended", () => {
+        this.nextTrack();
+      });
     },
     play() {
       if (this.playlist.length == 0) {

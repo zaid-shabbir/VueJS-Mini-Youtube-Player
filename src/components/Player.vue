@@ -425,7 +425,7 @@ export default {
     },
     play() {
       if (this.playlist.length == 0) {
-        this.note = "Playlist is empty";
+        this.note = "Playlist is empty!";
       } else {
         if (this.isTimerPlaying == false) {
           player.play();
@@ -509,9 +509,13 @@ export default {
       }
     },
     favorite() {
-      this.playlist[this.current_video.number - 1].favorite = !this.playlist[
-        this.current_video.number - 1
-      ].favorite;
+      if (this.playlist.length === 0) {
+        this.note = "Playlist is empty!";
+      } else {
+        this.playlist[this.current_video.number - 1].favorite = !this.playlist[
+          this.current_video.number - 1
+        ].favorite;
+      }
     },
     onPlayerReady() {
       var vm = this;

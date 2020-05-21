@@ -346,14 +346,14 @@ export default {
         duration: "00:00",
         favorite: false
       },
-      url: "https://www.youtube.com/watch?v=Il7Nv270zNk",
+      url: "",
       playlist: [],
       note: ""
     };
   },
   mounted() {
     player = new YTPlayer("#youtube-player", {
-      width: 360,
+      width: 350,
       height: 200,
       controls: false,
       annotations: false,
@@ -403,7 +403,7 @@ export default {
               this.playlist.push(video);
               this.note = `You are ${video.number} in the list`;
             }
-            // this.url = "";
+            this.url = "";
           }
         );
       } else {

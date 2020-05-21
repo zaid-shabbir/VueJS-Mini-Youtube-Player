@@ -493,15 +493,19 @@ export default {
       }
     },
     nextTrack() {
-      var index = this.playlist.findIndex(
-        video => video.number === this.current_video.number
-      );
-      if (index == this.playlist.length - 1) {
-        this.current_video = this.playlist[0];
-        this.loadVideo();
+      if (this.playlist.length === 0) {
+        this.note = "Playlist is empty!";
       } else {
-        this.current_video = this.playlist[index + 1];
-        this.loadVideo();
+        var index = this.playlist.findIndex(
+          video => video.number === this.current_video.number
+        );
+        if (index == this.playlist.length - 1) {
+          this.current_video = this.playlist[0];
+          this.loadVideo();
+        } else {
+          this.current_video = this.playlist[index + 1];
+          this.loadVideo();
+        }
       }
     },
     favorite() {

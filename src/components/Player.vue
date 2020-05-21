@@ -343,7 +343,6 @@ momentDurationFormatSetup(moment);
 // var YouTubeIframeLoader = require("youtube-iframe");
 const YTPlayer = require("yt-player");
 var player;
-var videotime = 0;
 var timeupdater = null;
 export default {
   name: "Player",
@@ -356,6 +355,7 @@ export default {
       duration: null,
       currentTime: null,
       isTimerPlaying: false,
+      videotime : 0,
       time: null,
       playing: false,
       show_playlist: false,
@@ -595,12 +595,12 @@ export default {
     onPlayerReady() {
       var vm = this;
       function updateTime() {
-        var oldTime = videotime;
+        var oldTime = vm.videotime;
         if (player && player.getCurrentTime) {
-          videotime = player.getCurrentTime();
+          vm.videotime = player.getCurrentTime();
         }
-        if (videotime !== oldTime) {
-          vm.generateTime(videotime);
+        if (vm.videotime !== oldTime) {
+          vm.generateTime(vm.videotime);
         }
       }
       timeupdater = setInterval(updateTime, 100);

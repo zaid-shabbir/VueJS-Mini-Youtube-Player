@@ -7,7 +7,7 @@
             <div class="video">
               <img
                 v-if="!playing"
-                src="../assets/images/img.jpg"
+                src="../assets/images/cover.jpg"
                 class="default-image"
                 alt="Default Image"
               />
@@ -24,17 +24,17 @@
                 <use xlink:href="#icon-heart-o"></use>
               </svg>
             </div>
-            <div class="player-controls__item" @click="nextTrack">
+            <div class="player-controls__item next" @click="nextTrack">
               <svg class="icon">
                 <use xlink:href="#icon-next"></use>
               </svg>
             </div>
-            <div class="player-controls__item" @click="prevTrack">
+            <div class="player-controls__item prev" @click="prevTrack">
               <svg class="icon">
                 <use xlink:href="#icon-prev"></use>
               </svg>
             </div>
-            <div class="player-controls__item -xl js-play" @click="play">
+            <div class="player-controls__item -xl js-play play" @click="play">
               <svg class="icon">
                 <use xlink:href="#icon-pause" v-if="isTimerPlaying"></use>
                 <use xlink:href="#icon-play" v-else></use>
@@ -86,115 +86,122 @@
           </div>
         </div>
         <div class="vip">
-          Add my vidoe to the
+          Add my video to the
           <span class="vip-list">
-            VIP Quelist
+            VIP QueList
           </span>
           &nbsp; for $1.00
           <input type="checkbox" id="checkbox" checked />
         </div>
       </div>
-      <div v-if="show_playlist && !note" class="playlist">
-        <div class="next-video-title">Next Video</div>
-        <div class="video-detail">
-          <div v-if="playlist.length > 1">
-            <div
-              v-if="current_video.number < playlist.length"
-              class="video-title"
-            >
-              {{ playlist[current_video.number].number }}.&nbsp;{{
-                playlist[current_video.number].title
-              }}
-            </div>
-            <div v-else class="video-title">
-              {{ playlist[0].number }}.&nbsp;{{ playlist[0].title }}
-            </div>
-          </div>
-          <div v-if="playlist.length > 1" class="video-duration-container">
-            <div
-              v-if="current_video.number < playlist.length"
-              class="video-duration"
-            >
-              {{ playlist[current_video.number].duration }}
-            </div>
-            <div v-else class="video-duration">
-              {{ playlist[0].duration }}
-            </div>
-            <svg
-              height="20"
-              width="10"
-              aria-hidden="true"
-              focusable="false"
-              data-prefix="fal"
-              data-icon="ellipsis-v"
-              class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
-              role="img"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 64 512"
-            >
-              <path
-                fill="currentColor"
-                d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
-              ></path>
-            </svg>
-          </div>
-        </div>
-        <div id="style-1" class="que-list-container" v-if="playlist.length > 1">
-          <div class="que-title">QueList</div>
-          <div v-for="(video, index) in playlist" :key="index">
-            <div v-if="playlist.length > 1" class="video-detail">
+      <transition name="slide">
+        <div v-if="show_playlist && !note" class="playlist">
+          <div class="next-video-title">Next Video</div>
+          <div class="video-detail">
+            <div v-if="playlist.length > 1">
               <div
+                v-if="current_video.number < playlist.length"
                 class="video-title"
-                :class="{
-                  active: video.number == playlist[playlist.length - 1].number
-                }"
               >
-                {{ video.number }}.&nbsp;{{ video.title }}
+                {{ playlist[current_video.number].number }}.&nbsp;{{
+                  playlist[current_video.number].title
+                }}
               </div>
-              <div class="video-duration-container">
+              <div v-else class="video-title">
+                {{ playlist[0].number }}.&nbsp;{{ playlist[0].title }}
+              </div>
+            </div>
+            <div v-if="playlist.length > 1" class="video-duration-container">
+              <div
+                v-if="current_video.number < playlist.length"
+                class="video-duration"
+              >
+                {{ playlist[current_video.number].duration }}
+              </div>
+              <div v-else class="video-duration">
+                {{ playlist[0].duration }}
+              </div>
+              <svg
+                height="20"
+                width="10"
+                aria-hidden="true"
+                focusable="false"
+                data-prefix="fal"
+                data-icon="ellipsis-v"
+                class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
+                role="img"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 64 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+          <div
+            id="style-1"
+            class="que-list-container"
+            v-if="playlist.length > 1"
+          >
+            <div class="que-title">QueList</div>
+            <div v-for="(video, index) in playlist" :key="index">
+              <div v-if="playlist.length > 1" class="video-detail">
                 <div
-                  class="video-duration"
+                  class="video-title"
                   :class="{
                     active: video.number == playlist[playlist.length - 1].number
                   }"
                 >
-                  {{ video.duration }}
+                  {{ video.number }}.&nbsp;{{ video.title }}
                 </div>
-                <svg
-                  height="20"
-                  width="10"
-                  aria-hidden="true"
-                  focusable="false"
-                  data-prefix="fal"
-                  data-icon="ellipsis-v"
-                  class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
-                  role="img"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 64 512"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
-                  ></path>
-                </svg>
+                <div class="video-duration-container">
+                  <div
+                    class="video-duration"
+                    :class="{
+                      active:
+                        video.number == playlist[playlist.length - 1].number
+                    }"
+                  >
+                    {{ video.duration }}
+                  </div>
+                  <svg
+                    height="20"
+                    width="10"
+                    aria-hidden="true"
+                    focusable="false"
+                    data-prefix="fal"
+                    data-icon="ellipsis-v"
+                    class="ellipses svg-inline--fa fa-ellipsis-v fa-w-2"
+                    role="img"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 64 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M32 224c17.7 0 32 14.3 32 32s-14.3 32-32 32-32-14.3-32-32 14.3-32 32-32zM0 136c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32zm0 240c0 17.7 14.3 32 32 32s32-14.3 32-32-14.3-32-32-32-32 14.3-32 32z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <hr v-if="playlist.length > 1" class="playlist-hr" />
+            </div>
+          </div>
+
+          <div class="vip-section">
+            <div>
+              <div class="vip-top">
+                Get in the <span class="vip-que">VIP QueList</span>
+              </div>
+              <div class="vip-bottom">
+                Jump the line for only $1.00
               </div>
             </div>
-            <hr v-if="playlist.length > 1" class="playlist-hr" />
+            <button class="priority-btn">Add Priority</button>
           </div>
         </div>
-
-        <div class="vip-section">
-          <div>
-            <div class="vip-top">
-              Get in the <span class="vip-que">VIP QueList</span>
-            </div>
-            <div class="vip-bottom">
-              Jump the line for only $1.00
-            </div>
-          </div>
-          <button class="priority-btn">Add Priority</button>
-        </div>
-      </div>
+      </transition>
       <div v-if="note" class="notification-container">
         <svg
           aria-hidden="true"
@@ -220,8 +227,8 @@
           focusable="false"
           data-prefix="fal"
           data-icon="times"
-          height="40"
-          width="40"
+          height="26"
+          width="26"
           class="times-svg svg-inline--fa fa-times fa-w-10"
           role="img"
           xmlns="http://www.w3.org/2000/svg"
@@ -233,11 +240,50 @@
           ></path>
         </svg>
       </div>
-      <div v-if="!note" @click="togglePlaylist" class="playlist-toggler">
+      <svg
+        v-if="!note"
+        @click="togglePlaylist"
+        class="playlist-toggler"
+        width="246px"
+        height="30px"
+        viewBox="0 0 246 30"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+      >
+        <title>Group</title>
+        <g
+          id="Page-1"
+          stroke="none"
+          stroke-width="1"
+          fill="none"
+          fill-rule="evenodd"
+        >
+          <g id="#121436" transform="translate(-189.000000, -407.000000)">
+            <g id="Group" transform="translate(189.000000, 407.000000)">
+              <path
+                d="M25,0 L221,0 C225.602373,9.30914651e-16 229.333333,3.73096042 229.333333,8.33333333 C229.333333,10.9563109 228.098382,13.4262135 226,15 L208.4,28.2 C206.842134,29.3683992 204.947332,30 203,30 L43,30 C41.0526681,30 39.1578655,29.3683992 37.6,28.2 L20,15 C16.3181017,12.2385763 15.5719096,7.01523167 18.3333333,3.33333333 C19.9071198,1.23495131 22.3770225,2.25818999e-15 25,0 Z"
+                id="Rectangle"
+                fill="#121436"
+              ></path>
+              <rect
+                id="Rectangle"
+                fill-opacity="0.2"
+                fill="#FFFFFF"
+                x="72"
+                y="20"
+                width="102"
+                height="5"
+                rx="2.5"
+              ></rect>
+            </g>
+          </g>
+        </g>
+      </svg>
+      <!-- <div v-if="!note" @click="togglePlaylist" class="playlist-toggler">
         <hr class="see-playlist" />
-      </div>
+      </div> -->
     </div>
-
     <svg
       xmlns="http://www.w3.org/2000/svg"
       hidden
@@ -401,12 +447,18 @@ export default {
             } else {
               this.playlist.push(video);
               this.note = `You are ${video.number} in the list`;
+              setTimeout(() => {
+                this.note = "";
+              }, 2000);
             }
             this.url = "";
           }
         );
       } else {
         this.note = "Please enter a valid link!";
+        setTimeout(() => {
+          this.note = "";
+        }, 2000);
       }
     },
     loadVideo() {
@@ -425,6 +477,9 @@ export default {
     play() {
       if (this.playlist.length == 0) {
         this.note = "Playlist is empty!";
+        setTimeout(() => {
+          this.note = "";
+        }, 2000);
       } else {
         if (this.isTimerPlaying == false) {
           player.play();
@@ -478,6 +533,9 @@ export default {
     prevTrack() {
       if (this.playlist.length === 0) {
         this.note = "Playlist is empty!";
+        setTimeout(() => {
+          this.note = "";
+        }, 2000);
       } else {
         var index = this.playlist.findIndex(
           video => video.number === this.current_video.number
@@ -494,6 +552,9 @@ export default {
     nextTrack() {
       if (this.playlist.length === 0) {
         this.note = "Playlist is empty!";
+        setTimeout(() => {
+          this.note = "";
+        }, 2000);
       } else {
         var index = this.playlist.findIndex(
           video => video.number === this.current_video.number
@@ -510,6 +571,9 @@ export default {
     favorite() {
       if (this.playlist.length === 0) {
         this.note = "Playlist is empty!";
+        setTimeout(() => {
+          this.note = "";
+        }, 2000);
       } else {
         this.playlist[this.current_video.number - 1].favorite = !this.playlist[
           this.current_video.number - 1

@@ -16,7 +16,7 @@
           </div>
           <div class="player-controls">
             <div
-              class="player-controls__item -favorite"
+              class="player-controls__item -favorite next"
               :class="{ active: current_video.favorite }"
               @click="favorite"
             >
@@ -64,6 +64,7 @@
               type="text"
               id="youtube_link"
               placeholder="https://..Paste Your Youtube URL Link here"
+              @keyup.enter="addInPlaylist"
             />
             <svg
               @click="addInPlaylist"
@@ -376,7 +377,7 @@ export default {
   name: "Player",
   data() {
     return {
-      api_key: "AIzaSyDPJij3UftO9ExSYMsqvVwMn4uc1O25_4Y",
+      api_key: "AIzaSyD1sOpCAq5hCgsmXd-hYTGRBzw1GZMP1-s",
       circleLeft: null,
       barWidth: null,
       currentTime: null,
